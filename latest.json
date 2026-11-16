@@ -1,0 +1,11 @@
+{
+ "version": "2.0",
+ "file": "paketler/ing_2_0.b64",
+ "sha256": "5d3da5931d962383fde564f00c04e740d1e2bb46f4f459503ee29cea0e7d73c3",
+ "size": 2027080,
+ "date": "2026-11-16T06:20:39Z",
+ "minShell": 2,
+ "notes_tr": "• Güncellemeler artık GitHub üzerinden de dağıtılıyor; Firebase kanalı yedek olarak çalışmaya devam ediyor.\n• Kayıtlar, yedekler ve telefonla eşitleme değişmedi.",
+ "notes_en": "• Updates are now also delivered through GitHub; the Firebase channel keeps working as a backup.\n• Records, backups and phone sync are unchanged.",
+ "notes_ar": "• أصبحت التحديثات تُوزَّع أيضاً عبر GitHub، وتبقى قناة Firebase احتياطية.\n• لم تتغير السجلات والنسخ الاحتياطية والمزامنة مع الهاتف."
+}
