@@ -1,12 +1,13 @@
 {
- "version": "2.3",
- "file": "paketler/ing_2_3.b64",
- "sha256": "c26d88a4eb28267bc3fb6dbcdf136569781964f6b4fcacc8a7ce994d0cb1c70c",
- "size": 6286218,
- "gzlen": 2706480,
- "date": "2026-11-22T13:33:27Z",
+ "version": "2.400",
+ "semver": "2.4.0",
+ "file": "paketler/ing_2_400.b64",
+ "sha256": "33fd50f31defaf418175aea98ce458f6d361f572a06a8be03243ab81aac1eea2",
+ "size": 6399359,
+ "gzlen": 2762308,
+ "date": "2026-11-22T13:57:34Z",
  "minShell": 2,
- "notes_tr": "• Güncelleme inerken yüzde, MB (inen / toplam / kalan) ve indirme hızı gösterilir.\n• Sağ üstte «Programı kapat» düğmesi (tam ekranda da kapatılabilir).\n• Programın kaynak kodu artık GitHub'da güvende (kaynak/ klasörü).",
- "notes_en": "• While an update downloads you see the percentage, MB (downloaded / total / left) and speed.\n• «Close the program» button at the top right (works in full screen too).",
- "notes_ar": "• أثناء تنزيل التحديث تظهر النسبة المئوية والميغابايت (المنزَّل / الإجمالي / المتبقي) والسرعة.\n• زر «إغلاق البرنامج» في أعلى اليمين (يعمل في وضع ملء الشاشة أيضاً)."
+ "notes_tr": "• Eşitleme artık kayıtları birleştiriyor: iki cihazda yapılan değişikliklerin hiçbiri kaybolmaz. Çakışan değerler Ayarlar → Çakışma geçmişi'nde saklanır.\n• Kurum alanı üyeleri ve Firebase güvenlik kuralları: her kurum yalnız kendi verisine erişir (Ayarlar → Kurum alanı üyeleri).\n• Sürüm numaraları artık v2.4.0 biçiminde; güncelleme paketleri için imza denetimi altyapısı eklendi.\n• Panelde CEFR seviyelerine göre sınıf ilerlemesi.\n• Açık tema, klavye kısayolları (Ctrl + /) ve ilk açılış tanıtımı.\n• Hakkında, lisans ve gizlilik bölümü. Hatalar yöneticiye kendiliğinden bildirilir (kişisel veri gönderilmez). Admin ile iletişim Ayarlar'ın en sonunda.",
+ "notes_en": "• Sync now merges records: no change made on two devices is lost. Conflicting values are kept in Settings → Conflict history.\n• Workspace members and Firebase security rules: each institution reaches only its own data (Settings → Workspace members).\n• Version numbers now look like v2.4.0; signature checking for update packages has been added.\n• Class progress by CEFR level on the dashboard.\n• Light theme, keyboard shortcuts (Ctrl + /) and a first-run introduction.\n• About, licence and privacy section. Errors are reported to the administrator automatically (no personal data). Contact the administrator is at the end of Settings.",
+ "notes_ar": "• المزامنة تدمج السجلات الآن: لا يضيع أي تغيير أُجري على جهازين. تُحفظ القيم المتعارضة في الإعدادات ← سجل التعارضات.\n• أعضاء مساحة المؤسسة وقواعد أمان Firebase: تصل كل مؤسسة إلى بياناتها فقط (الإعدادات ← أعضاء مساحة المؤسسة).\n• أرقام الإصدارات أصبحت بصيغة v2.4.0، وأُضيف أساس التحقق من توقيع حزم التحديث.\n• تقدم الصف حسب مستويات CEFR في اللوحة الرئيسية.\n• سمة فاتحة واختصارات لوحة المفاتيح (Ctrl + /) وتعريف عند التشغيل الأول.\n• قسم «حول البرنامج» والترخيص والخصوصية. تُبلَّغ الأخطاء إلى المسؤول تلقائياً (دون بيانات شخصية). التواصل مع المسؤول في آخر الإعدادات."
 }

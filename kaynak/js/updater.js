@@ -11,7 +11,28 @@
   const BASE = 'https://firestore.googleapis.com/v1/projects/' + C.projectId + '/databases/(default)/documents/';
   const CHUNK = 700000;
   const CH = 'guncellemeler/ing_';
-  const vnum = (v) => { const [a, b] = String(v || '0').split('.').map((x) => parseInt(x, 10) || 0); return a * 1000 + b; };
+  /* v2.4.0: sürüm karşılaştırma. Görünen sürüm semver (v2.4.0, v2.4.1…). Kabuğa giden kimlik eski kurulumlarla uyum için
+     "ana.ikincilYAMA" biçimindedir: 2.4.0 → "2.400", 2.4.1 → "2.401". Eski "2.3" biçimi de doğru sıralanır. */
+  const vnum = (v) => {
+    const p = String(v || '0').replace(/^v/i, '').split('.');
+    const a = parseInt(p[0], 10) || 0; let mi = 0, pa = 0;
+    if (p.length >= 3) { mi = parseInt(p[1], 10) || 0; pa = parseInt(p[2], 10) || 0; }
+    else if (p[1] != null) { const b = String(p[1]); if (b.length >= 3) { mi = parseInt(b.slice(0, -2), 10) || 0; pa = parseInt(b.slice(-2), 10) || 0; } else mi = parseInt(b, 10) || 0; }
+    return a * 1e6 + mi * 1e3 + pa;
+  };
+  const semver = (v) => { const n = vnum(v); return Math.floor(n / 1e6) + '.' + Math.floor((n % 1e6) / 1e3) + '.' + (n % 1e3); };
+  /* v2.4.0: paket imzası (Ed25519). Anahtar listesi doluysa imzasız ya da yanlış imzalı paket KURULMAZ.
+     Gizli anahtar yalnız yöneticinin bilgisayarında (C:\Claude Programlarım\_Anahtarlar) durur. */
+  const SIGN_KEYS = window.UPD_KEYS || [];
+  const imzaMesaji = (m) => 'ing-mufredat|' + m.version + '|' + m.sha256;
+  function imzaDogru(m) {
+    if (!SIGN_KEYS.length) return true;
+    if (!m.sig || !window.nacl) return false;
+    try {
+      const msg = new TextEncoder().encode(imzaMesaji(m)); const sig = b64ToBytes(m.sig);
+      return SIGN_KEYS.some((k) => nacl.sign.detached.verify(msg, sig, b64ToBytes(k)));
+    } catch (e) { return false; }
+  }
   const val = (f) => (f == null ? null : 'stringValue' in f ? f.stringValue : 'integerValue' in f ? +f.integerValue : 'booleanValue' in f ? f.booleanValue : 'doubleValue' in f ? f.doubleValue : null);
   const b64ToBytes = (s) => { const b = atob(s); const u = new Uint8Array(b.length); for (let i = 0; i < b.length; i++) u[i] = b.charCodeAt(i); return u; };
   const hex = (buf) => [...new Uint8Array(buf)].map((x) => x.toString(16).padStart(2, '0')).join('');
@@ -59,7 +80,7 @@
     on(fn) { this.listeners.add(fn); },
     set(state, extra) { this.state = state; Object.assign(this, extra || {}); this.listeners.forEach((f) => { try { f(this); } catch (e) {} }); },
     supported() { return !!Platform.ota; },
-    vnum,
+    vnum, semver, imzaDogru,
     async init() {
       if (!this.supported()) return;
       try { this.info = await Platform.ota.info(); } catch (e) {}
@@ -78,7 +99,7 @@
         Store.local.lastUpdateCheck = Date.now(); Store.saveLocal();
         const avail = m && m.version && vnum(m.version) > vnum(Platform.version);
         const bad = this.info && this.info.state && this.info.state.bad;
-        if (avail && bad && bad === m.version) this.set('error', { latest: m, error: t('updateBad', { v: m.version }) });
+        if (avail && bad && bad === m.version) this.set('error', { latest: m, error: t('updateBad', { v: semver(m.version) }) });
         else if (avail && (m.minShell || 2) > this.shell()) this.set('shellOld', { latest: m });
         else this.set(avail ? 'available' : 'uptodate', { latest: m });
       } catch (e) { this.set('error', { error: e.message || String(e) }); }
@@ -109,7 +130,9 @@
           }
         }
         const bytes = b64ToBytes(parts.join(''));
+        if (SIGN_KEYS.length && !m.sha256) throw new Error('doğrulama (imza)');
         if (m.sha256) { const h = hex(await crypto.subtle.digest('SHA-256', bytes)); if (h !== m.sha256) throw new Error('doğrulama (sha256)'); }
+        if (!imzaDogru(m)) throw new Error('doğrulama (imza)');
         const bundle = JSON.parse(await gunzipText(bytes));
         if (bundle.version !== m.version || !bundle.files || !bundle.files['index.html']) throw new Error('paket');
         await Platform.ota.begin(m.version);

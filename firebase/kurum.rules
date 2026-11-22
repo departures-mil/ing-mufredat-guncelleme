@@ -1,0 +1,23 @@
+rules_version = '2';
+// İngilizce Müfredat Sistemi — kurumun KENDİ Firebase projesi için güvenlik kuralları (v2.4.0)
+// Her kurum alanı (mufredat_ing/{kurumKodu}) yalnız sahibine ve üye listesindeki e-postalara açıktır.
+// Üye listesi programda: Ayarlar → Kurum alanı üyeleri.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function girisli() { return request.auth != null && request.auth.token.email != null; }
+    function eposta() { return request.auth.token.email.lower(); }
+    function alan(ws) { return get(/databases/$(database)/documents/mufredat_ing/$(ws)).data; }
+    function uye(ws) { return girisli() && exists(/databases/$(database)/documents/mufredat_ing/$(ws)) && (eposta() == alan(ws).sahip || eposta() in alan(ws).uyeler); }
+
+    match /mufredat_ing/{ws} {
+      allow get: if girisli() && (resource == null || eposta() == resource.data.sahip || eposta() in resource.data.uyeler);
+      allow create: if girisli() && request.resource.data.sahip == eposta() && eposta() in request.resource.data.uyeler;
+      allow update: if girisli() && resource.data.sahip == eposta() && request.resource.data.sahip == resource.data.sahip;
+      allow list, delete: if false;
+
+      match /{alt=**} {
+        allow read, write: if uye(ws);
+      }
+    }
+  }
+}

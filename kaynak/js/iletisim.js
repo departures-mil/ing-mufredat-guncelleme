@@ -104,7 +104,7 @@
       if (reply && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(reply)) { toast(t('ctBadMail'), 'err'); return; }
       if (Date.now() - lastSent < 60000) { toast(t('ctWait'), 'err'); return; }
       Store.local.ctName = name; Store.local.ctReply = reply; Store.saveLocal();
-      const msg = { id: Store.uid('c'), t: Date.now(), name, reply, topic, topicTr: I18N.tr[topic], text, inst: Store.db.config.institution.name || '', prog: I18N.tr['prog_' + Store.prog], device: Platform.kind, ver: Platform.version, lang: UI.lang() };
+      const msg = { id: Store.uid('c'), t: Date.now(), name, reply, topic, topicTr: I18N.tr[topic], text, inst: Store.db.config.institution.name || '', prog: I18N.tr['prog_' + Store.prog], device: Platform.kind, ver: Platform.semver, lang: UI.lang() };
       b.disabled = true; b.innerHTML = icon('cloud') + ' ' + t('ctSending');
       let st = {}; try { st = await deliver(msg); } catch (e) { st = msg.st || {}; }
       b.disabled = false; b.innerHTML = icon('check') + ' ' + t('ctSend');

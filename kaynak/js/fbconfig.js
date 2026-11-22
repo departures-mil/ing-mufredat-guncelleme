@@ -15,3 +15,6 @@ window.FB_ADMIN_EMAIL = 'yonetici@example.invalid';
 window.MIN_SHELL_FOR_THIS_BUNDLE = 2;
 /* v2.0: GitHub güncelleme kanalı (herkese açık depo) */
 window.UPD_GH = { owner: 'departures-mil', repo: 'ing-mufredat-guncelleme', branch: 'main' };
+/* v2.4.0: güncelleme paketi imza anahtarları (Ed25519, açık anahtar). Liste doluysa yalnız bu anahtarlarla imzalanmış paket kurulur.
+   Gizli anahtar yalnız yöneticinin bilgisayarındadır (araclar/anahtar_uret.py). */
+window.UPD_KEYS = [];
