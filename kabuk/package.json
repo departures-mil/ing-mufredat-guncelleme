@@ -1,0 +1,56 @@
+{
+ "name": "ingmufredat-sistemi",
+ "productName": "Ing Mufredat Sistemi",
+ "version": "3.0.0",
+ "description": "\u0130ngilizce M\u00fcfredat Sistemi",
+ "author": "departures-mil",
+ "main": "main.js",
+ "build": {
+  "appId": "com.departures.ingmufredat",
+  "productName": "Ing Mufredat Sistemi",
+  "electronVersion": "33.2.1",
+  "directories": {
+   "output": "/tmp/ingdist"
+  },
+  "files": [
+   "main.js",
+   "preload.js",
+   "lan.js",
+   "enjekte.js",
+   "kabuk.json",
+   "version.json",
+   "icon.ico",
+   "package.json",
+   "ui/**"
+  ],
+  "asar": false,
+  "electronLanguages": [
+   "tr",
+   "en-US",
+   "ar"
+  ],
+  "compression": "maximum",
+  "win": {
+   "icon": "icon.ico",
+   "signAndEditExecutable": false,
+   "target": [
+    {
+     "target": "portable",
+     "arch": [
+      "x64"
+     ]
+    }
+   ]
+  },
+  "nsis": {
+   "oneClick": true,
+   "perMachine": false,
+   "artifactName": "IngMufredat_Sistemi_Kurulum.${ext}",
+   "shortcutName": "\u0130ngilizce M\u00fcfredat Sistemi",
+   "deleteAppDataOnUninstall": false
+  },
+  "portable": {
+   "artifactName": "IngMufredat_Sistemi_v3.exe"
+  }
+ }
+}

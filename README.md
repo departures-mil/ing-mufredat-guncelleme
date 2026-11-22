@@ -29,3 +29,14 @@ Anahtar üretmek için: `python3 araclar/anahtar_uret.py ing-mufredat-imza.key`
 Sürümler geriye kurulmaz (eski sürüm numarası yeni sayılmaz). Bir sürümde sorun olursa önceki sürümün içeriği
 Releases'tan alınır ve daha yüksek bir numarayla (ör. v2.4.2) yeniden yayınlanır. Program da ilk açılışı onaylanmayan
 sürümden kendiliğinden bir önceki sürüme döner.
+
+## Kabuk v3 (2026-11-22) — Küçült, Wi‑Fi eşitleme, kabuk güncellemesi
+- `kabuk/` masaüstü kabuğunun kaynağı (Electron 33.2.1): `main.js`, `preload.js`, `lan.js` (aynı modemde eşitleme sunucusu,
+  port 47851, 6 haneli kod), `enjekte.js` (arayüze Küçült ve 📶 düğmelerini ekler; birleştirmeyi arayüzün `Birlestir`
+  modülüyle yapar — tabansız birleştirme hiçbir kaydı silmez). Eklenti arayüz sürümünden bağımsızdır; `kaynak/`'a dokunmaz.
+- Kabuk artık kendini de günceller: `kabuk/kabuk.json` (Ed25519 imzalı). Yayın: `node araclar/kabuk_yayinla.js 3.0.1 <kabuk-imza.pem>`
+  (anahtar `C:\Claude Programlarım\_Anahtarlar\IngMufredat\kabuk-imza.pem`).
+- `kurulum/IngMufredat_Sistemi_v3.exe` — tek dosyalık program: açılınca bilgisayarda kurulu eski programın kabuğunu yeniler
+  ya da programı kurar ve kısayol açar (kayıtlar `%APPDATA%\IngMufredatSistemi` içinde kalır). Kabuk v2 kurulumları için bir kerelik.
+- `kurulum/IngMufredat-3.0.0.apk` — yeni Android kabuğu (paket `com.departures.ingmufredat`, yeni anahtar
+  `_Anahtarlar\IngMufredat\ingmufredat.jks`); eski uygulamanın yanına kurulur, kayıtlar eşitlemeyle gelir. Derleme: `kabuk/android/derle-apk.sh`.
