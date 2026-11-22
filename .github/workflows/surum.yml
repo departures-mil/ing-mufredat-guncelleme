@@ -1,0 +1,37 @@
+# Yeni sürüm yayınlandığında (latest.json değişince) GitHub sürüm sayfasını (Releases) kendiliğinden açar.
+# Paket dosyası sürüme eklenir; böylece her sürüm kalıcı olarak saklanır ve gerekirse geri dönülebilir.
+name: Sürüm sayfası
+on:
+  push:
+    branches: [main]
+    paths: [latest.json]
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  surum:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Paketi doğrula ve sürümü aç
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -e
+          SV=$(jq -r '.semver // .version' latest.json)
+          FILE=$(jq -r '.file' latest.json)
+          SHA=$(jq -r '.sha256' latest.json)
+          test -f "$FILE"
+          GOT=$(base64 -d "$FILE" | sha256sum | cut -d' ' -f1)
+          if [ "$GOT" != "$SHA" ]; then echo "sha256 uyuşmuyor: $GOT != $SHA"; exit 1; fi
+          if gh release view "v$SV" >/dev/null 2>&1; then echo "v$SV zaten var"; exit 0; fi
+          SIG=$(jq -r 'if .sig then "İmzalı (Ed25519)" else "İmzasız (yalnız sha256)" end' latest.json)
+          {
+            echo "## Türkçe"; jq -r '.notes_tr' latest.json; echo
+            echo "## English"; jq -r '.notes_en' latest.json; echo
+            echo "## العربية"; jq -r '.notes_ar' latest.json; echo
+            echo "---"; echo "Paket: \`$FILE\` · sha256 \`$SHA\` · $SIG"
+            echo "Program bu sürümü kendiliğinden bulur ve tek dokunuşla kurar."
+          } > notlar.md
+          cp latest.json "latest-v$SV.json"
+          gh release create "v$SV" "$FILE" "latest-v$SV.json" --title "v$SV" --notes-file notlar.md --target "$GITHUB_SHA"

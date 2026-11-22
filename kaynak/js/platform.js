@@ -88,7 +88,8 @@
       restart: async () => { a.otaRestart(); return true; },
     };
   }
-  P.version = window.APP_VERSION || '1.0';
+  P.version = window.APP_VERSION || '1.0'; // kabuğa giden sürüm kimliği (ör. 2.400)
+  P.semver = window.APP_SEMVER || P.version; // v2.4.0: görünen sürüm (ör. 2.4.0)
   window.Platform = P;
 
   /* Ücretsiz Google çeviri uç noktası ile metin çevirisi */

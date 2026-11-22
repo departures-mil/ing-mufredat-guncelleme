@@ -187,11 +187,11 @@
     const L = lang();
     document.documentElement.lang = L; document.documentElement.dir = L === 'ar' ? 'rtl' : 'ltr';
     document.documentElement.classList.toggle('bilingual', !!lang2());
-    document.title = plainText(t('appName')) + ' v' + Platform.version;
+    document.title = plainText(t('appName')) + ' v' + Platform.semver;
     $('#app').innerHTML = `
       <header class="topbar">
         <button class="ib burger" id="burger">${icon('menu')}</button>
-        <div class="brand" id="brand"><div class="logo">${logoSvg()}</div><div><div class="bt"><span class="nfull">${t('appName')}</span><span class="nshort">${t('appShort')}</span> <span class="bver">v${Platform.version}</span></div><div class="bv">v${Platform.version} · ${tx(Store.cur().title)}</div></div></div>
+        <div class="brand" id="brand"><div class="logo">${logoSvg()}</div><div><div class="bt"><span class="nfull">${t('appName')}</span><span class="nshort">${t('appShort')}</span> <span class="bver">v${Platform.semver}</span></div><div class="bv">v${Platform.semver} · ${tx(Store.cur().title)}</div></div></div>
         <div class="sp"></div>
         <div class="gsearch" id="gsWrap"></div>
         <div class="progsel p-${Store.prog}" title="${t('program')}">${icon('plane')}<select id="progSel">${Store.PROGS.map((p) => `<option value="${p}" ${p === Store.prog ? 'selected' : ''}>${t('prog_' + p)}</option>`).join('')}</select></div>
@@ -234,7 +234,7 @@
     const p = Store.progOf(st); if (p === Store.prog) return;
     Store.setProg(p); // sayfa çizimi sırasında çağrılır: kabuğu yeniden kurmadan yalnız üst çubuğu güncelle
     const ps = $('.progsel'); if (ps) { ps.className = 'progsel p-' + p; $('select', ps).value = p; }
-    const bv = $('.brand .bv'); if (bv) bv.textContent = 'v' + Platform.version + ' · ' + tx(Store.cur().title);
+    const bv = $('.brand .bv'); if (bv) bv.textContent = 'v' + Platform.semver + ' · ' + tx(Store.cur().title);
   }
   function logoSvg() { return `<svg viewBox="0 0 64 64"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4fc3f7"/><stop offset="1" stop-color="#1565c0"/></linearGradient></defs><circle cx="32" cy="32" r="30" fill="url(#lg)"/><circle cx="32" cy="32" r="30" fill="none" stroke="#ffb74d" stroke-width="2.5" stroke-dasharray="4 5"/><path fill="#fff" transform="translate(12 11) scale(1.67)" d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/></svg>`; }
   function syncChip() {
@@ -357,12 +357,13 @@
       <details class="adv" open><summary>${t('advanced')}</summary><label class="fl"><span>${t('fbConfig')}</span><textarea id="fbCfg" rows="5" dir="ltr" placeholder="${esc(t('fbConfigPh'))}">${sy.config && sy.config.projectId !== FB_CONFIG.projectId ? esc(JSON.stringify(sy.config, null, 1)) : ''}</textarea></label><button class="btn sm ghost" id="fbPaste">${icon('copy')} ${t('pasteLink')}</button></details>` : `
       <div class="row"><button class="btn pri" id="fbNow">${icon('cloud')} ${t('syncNow')}</button><button class="btn" id="fbCopy">${icon('copy')} ${t('copyLink')}</button><button class="btn ghost danger" id="fbOut">${t('logout')}</button></div><p class="muted sm">${t('linkHelp')}</p>`}
     </div>
+    ${window.V24 ? V24.settingsTop() : ''}
     <div id="kulYer"></div>
-    ${Contact.cardHtml()}
     <div class="card"><h3>${t('backup')}</h3><div class="row"><button class="btn" id="expBtn">${icon('dl')} ${t('exportData')}</button><label class="btn">${icon('ul')} ${t('importData')}<input type="file" accept=".json,application/json" id="impIn" hidden></label>${Platform.kind === 'desktop' ? `<button class="btn ghost" id="bkFolder">${t('openBackupFolder')}</button>` : ''}</div>${Platform.kind === 'desktop' ? `<p class="muted sm">${t('autoBackupInfo')}</p>` : ''}</div>
     ${Platform.kind === 'desktop' ? `<div class="card"><h3>${t('display')}</h3><p>${t('startFullscreen')}</p><button class="btn" id="fsToggle">${icon('win')} ${t('windowed')} / ${t('fullscreen')}</button></div>` : ''}
-    <div class="card"><h3>${t('about')}</h3><p><b>${t('appName')}</b> — ${t('version')} <b>v${Platform.version}</b> (${Platform.kind})</p><p class="muted">${t('dataSafe')}</p></div>`;
-    wireUpd(m); Contact.wire(m);
+    ${window.V24 ? V24.settingsBottom() : ''}
+    ${Contact.cardHtml()}`;
+    wireUpd(m); Contact.wire(m); if (window.V24) V24.wireSettings(m);
     { const ky = $('#kulYer', m); if (ky && window.Kullanim) { const k = Kullanim.kart(); k.classList.add('card'); ky.replaceWith(k); } }
     { const fr = $('#fbRehber', m); if (fr) fr.onclick = (e) => { e.preventDefault(); try { Platform.openUrl ? Platform.openUrl(FB_REHBER) : window.open(FB_REHBER, '_blank'); } catch (er) { window.open(FB_REHBER, '_blank'); } }; }
     $$('[data-lang]', m).forEach((b) => (b.onclick = () => setLang(b.dataset.lang)));
@@ -422,14 +423,14 @@
 
   /* ---------- GÜNCELLEMELER ---------- */
   function updChip() {
-    const c = $('#updChip'); if (!c) return; const U = Updater; const v = U.latest && U.latest.version;
+    const c = $('#updChip'); if (!c) return; const U = Updater; const v = U.latest && Updater.semver(U.latest.version);
     const show = ['available', 'downloading', 'ready'].includes(U.state);
     c.hidden = !show; c.className = 'chip upd s-' + U.state;
     $('span', c).textContent = U.state === 'ready' ? t('restartNow') : U.state === 'downloading' ? (U.dl ? IndirmeIlerleme.yazi(U.dl, lang()) : t('downloading', { p: U.progress })) : t('updateChip', { v });
   }
   function updNotes() { const L = Updater.latest || {}; return L['notes_' + lang()] || L.notes_tr || ''; }
   function updBoxHtml() {
-    const U = Updater; const v = U.latest && U.latest.version;
+    const U = Updater; const v = U.latest && Updater.semver(U.latest.version);
     let st = '';
     if (!U.supported()) st = `<p class="muted">${t('noOta')}</p>`;
     else if (U.state === 'checking') st = `<p>${t('checking')}</p>`;
@@ -440,7 +441,7 @@
     else if (U.state === 'shellOld') st = `<p class="err">${t('shellOld', { v })}</p>`;
     else if (U.state === 'error') st = `<p class="err">${t('updateErr')}: ${esc(U.error)}</p>`;
     const last = Store.local.lastUpdateCheck ? new Date(Store.local.lastUpdateCheck).toLocaleString() : '—';
-    return `<p>${t('currentVersion')}: <b>v${Platform.version}</b>${U.shell() ? ` <span class="muted sm">(${Platform.kind}, shell ${U.shell()})</span>` : ''}</p>${st}
+    return `<p>${t('currentVersion')}: <b>v${Platform.semver}</b>${U.shell() ? ` <span class="muted sm">(${Platform.kind}, shell ${U.shell()})</span>` : ''}</p>${st}
       ${U.supported() && !['downloading', 'ready'].includes(U.state) ? `<div class="row"><button class="btn sm" data-u="check">${icon('cloud')} ${t('checkUpdates')}</button><span class="muted sm">${t('lastCheck')}: ${last}</span></div>` : ''}`;
   }
   function wireUpdBox(box) {
@@ -478,7 +479,7 @@
   /* v1.4: her yeni sürümde bildirim — sistem bildirimi (izin varsa) ve uygulama içi pencere; her sürüm için bir kez */
   let sessionNotified = '';
   function notifyUpdate() {
-    const U = Updater; const v = U.latest && U.latest.version;
+    const U = Updater; const v = U.latest && Updater.semver(U.latest.version);
     const C = U.cfg();
     // v1.8: "her açılışta hatırlat" açıksa her oturumda bir kez, kapalıysa her sürüm için bir kez
     if (U.state !== 'available' || !v || (C.remind ? sessionNotified === v : Store.local.notifiedUpd === v)) return;
@@ -496,7 +497,7 @@
   }
   /* güncellemeden sonraki ilk açılışta: "vX.Y kuruldu" ve yenilikler */
   function showWhatsNew() {
-    const v = Platform.version, last = Store.local.lastRunVer;
+    const v = Platform.semver, last = Store.local.lastRunVer;
     if (last === v) return;
     Store.local.lastRunVer = v; Store.saveLocal();
     if (!last) return; // ilk kurulum

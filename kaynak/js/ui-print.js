@@ -85,7 +85,7 @@
     $('#pDocx', m).onclick = (e) => run(e.currentTarget, async () => { const { model, tpl } = await build(true); const blob = await RenderDOCX(model, Object.assign({}, o, { template: tpl, landscape: isLand(model) })); const r = await Platform.saveFile(fname(model) + '.docx', blob, 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'); if (r) UI.toast(t('docxSaved')); });
   };
   const isLand = (model) => (model.type === 'cert' ? true : !!(opts().landscape || model.landscape));
-  const fname = (model) => (model.title || 'cikti').replace(/[\\/:*?"<>|]+/g, '').replace(/\s+/g, '_').slice(0, 80) + '_v' + Platform.version;
+  const fname = (model) => (model.title || 'cikti').replace(/[\\/:*?"<>|]+/g, '').replace(/\s+/g, '_').slice(0, 80) + '_v' + Platform.semver;
   async function build(noHtml) {
     const o = opts();
     if (['report', 'cert'].includes(o.type) && !Store.db.students[o.studentId]) throw new Error(t('selectStudent'));
