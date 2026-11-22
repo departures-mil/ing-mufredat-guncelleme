@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="tr" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#061327">
+<title>İngilizce Müfredat Sistemi</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/contact.css">
+<link rel="stylesheet" href="css/v11.css">
+<link rel="stylesheet" href="css/v12.css">
+</head>
+<body>
+<div id="app"></div>
+<div id="modal-root"></div>
+<div id="toasts"></div>
+<script src="js/version.js"></script>
+<script src="js/fbconfig.js"></script>
+<script src="vendor/jszip.min.js"></script>
+<script src="vendor/docx-preview.min.js"></script>
+<script>window.docxPreview = window.docx; window.docx = undefined;</script>
+<script src="vendor/docx.umd.js"></script>
+<script>window.docxLib = window.docx;</script>
+<script src="vendor/pdf.min.js"></script>
+<script src="vendor/html2canvas.min.js"></script>
+<script src="vendor/qrcode.js"></script>
+<script src="vendor/firebase.js"></script>
+<script src="js/i18n.js"></script>
+<script src="js/i18n-extra.js"></script>
+<script src="js/i18n-v11.js"></script>
+<script src="js/i18n-v12.js"></script>
+<script src="js/i18n-v13.js"></script>
+<script src="js/help.js"></script>
+<script src="js/default-data.js"></script>
+<script src="js/programs-data.js"></script>
+<script src="js/exams-data.js"></script>
+<script src="js/grammar-data.js"></script>
+<script src="js/dict-data.js"></script>
+<script src="js/source-i18n.js"></script>
+<script src="js/platform.js"></script>
+<script src="js/oxford-words.js"></script>
+<script src="js/aviation-words.js"></script>
+<script src="js/vocab-data.js"></script>
+<script src="js/store.js"></script>
+<script src="js/kullanim.js"></script>
+<script src="js/sync.js"></script>
+<script src="js/files.js"></script>
+<script src="js/indirme-ilerleme.js"></script>
+<script src="js/updater.js"></script>
+<script src="js/builtin-templates.js"></script>
+<script src="js/templates.js"></script>
+<script src="js/docmodel.js"></script>
+<script src="js/render-html.js"></script>
+<script src="js/render-docx.js"></script>
+<script src="js/ui-core.js"></script>
+<script src="js/ui-curr.js"></script>
+<script src="js/ui-students.js"></script>
+<script src="js/ui-print.js"></script>
+<script src="js/ui-plans.js"></script>
+<script src="js/ui-exams.js"></script>
+<script src="js/ui-grammar.js"></script>
+<script src="js/ui-dict.js"></script>
+<script src="js/ui-vocab.js"></script>
+<script src="vendor/ocr/tesseract.min.js"></script>
+<script src="js/ocr.js"></script>
+<script src="js/ui-bulk.js"></script>
+<script src="js/ui-docs.js"></script>
+<script src="js/iletisim.js"></script>
+<script src="js/glossary.js"></script>
+<script src="js/offline-tr.js"></script>
+<script src="js/langguard.js"></script>
+<script src="js/gsearch.js"></script>
+<script>Kullanim.baslat({uygulama:'ing-mufredat',bulut:true,ai:false,haric:['mufredat-bc0ad'],linkAc:function(u){try{Platform.openUrl(u)}catch(e){window.open(u,'_blank')}},dil:function(){return document.documentElement.lang},proje:function(){try{var s=Store.local.sync;return s&&s.enabled&&s.config?s.config.projectId:''}catch(e){return ''}}});</script>
+<script>App.start();</script>
+<script src="js/duyuru.js"></script>
+<script>Duyuru.baslat({uygulama:"ing-mufredat",surum:String(window.APP_VERSION||"2.1"),dil:function(){return document.documentElement.lang}});</script>
+</body>
+</html>
