@@ -1,11 +1,11 @@
 {
- "version": "2.0",
- "file": "paketler/ing_2_0.b64",
- "sha256": "5d3da5931d962383fde564f00c04e740d1e2bb46f4f459503ee29cea0e7d73c3",
- "size": 2027080,
- "date": "2026-11-16T06:20:39Z",
+ "version": "2.1",
+ "file": "paketler/ing_2_1.b64",
+ "sha256": "e4f49a74d7e8e731c4dad6bb83bf6ba5624f757e1d45911efc0c71fdd7299be4",
+ "size": 2025524,
+ "date": "2026-11-22T04:05:09Z",
  "minShell": 2,
- "notes_tr": "• Güncellemeler artık GitHub üzerinden de dağıtılıyor; Firebase kanalı yedek olarak çalışmaya devam ediyor.\n• Kayıtlar, yedekler ve telefonla eşitleme değişmedi.",
- "notes_en": "• Updates are now also delivered through GitHub; the Firebase channel keeps working as a backup.\n• Records, backups and phone sync are unchanged.",
- "notes_ar": "• أصبحت التحديثات تُوزَّع أيضاً عبر GitHub، وتبقى قناة Firebase احتياطية.\n• لم تتغير السجلات والنسخ الاحتياطية والمزامنة مع الهاتف."
+ "notes_tr": "• Admin duyuruları eklendi: yeni duyurular programda görünür, 🔔 düğmesinden okunur.\n• Kayıtlar, yedekler ve eşitleme değişmedi.",
+ "notes_en": "• Admin announcements added: new announcements appear in the program and can be re-read from the 🔔 button.\n• Records, backups and sync are unchanged.",
+ "notes_ar": "• أُضيفت إعلانات المدير: تظهر الإعلانات الجديدة في البرنامج ويمكن قراءتها مجددًا من زر 🔔.\n• لم تتغير السجلات والنسخ الاحتياطية والمزامنة."
 }
