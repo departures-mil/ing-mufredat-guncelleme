@@ -1,18 +1,37 @@
-# Yeni sürüm yayınlandığında (latest.json değişince) GitHub sürüm sayfasını (Releases) kendiliğinden açar.
-# Paket dosyası sürüme eklenir; böylece her sürüm kalıcı olarak saklanır ve gerekirse geri dönülebilir.
-name: Sürüm sayfası
+# Sürüm paketleme ve yayın — tek adım.
+# 1) `yayin/istek.json` içindeki semver, latest.json'dakinden yeniyse kaynak/ paketlenir (araclar/yayinla.py),
+#    paketler/ + latest.json + version.js main'e geri yazılır.  (Claude yalnız kaynak dosyalarını ve istek.json'u gönderir.)
+# 2) Paket doğrulanır ve GitHub sürüm sayfası (Releases) açılır; her sürüm kalıcı saklanır.
+name: Sürüm
 on:
   push:
     branches: [main]
-    paths: [latest.json]
+    paths: [latest.json, yayin/istek.json, kaynak/**]
   workflow_dispatch:
 permissions:
   contents: write
+concurrency: surum
 jobs:
   surum:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Gerekirse paketle (yayin/istek.json)
+        env:
+          ING_IMZA_ANAHTARI: ${{ secrets.ING_IMZA_ANAHTARI }}
+        run: |
+          set -e
+          if [ -f yayin/istek.json ]; then
+            ISTEK=$(jq -r '.semver' yayin/istek.json)
+            SON=$(jq -r '.semver // .version' latest.json 2>/dev/null || echo 0.0.0)
+            if [ "$ISTEK" != "$SON" ] && [ "$(printf '%s\n%s\n' "$SON" "$ISTEK" | sort -V | tail -1)" = "$ISTEK" ]; then
+              pip install -q cryptography >/dev/null 2>&1 || true
+              python3 araclar/yayinla.py "$ISTEK" "$(jq -r '.notes_tr' yayin/istek.json)" "$(jq -r '.notes_en' yayin/istek.json)" "$(jq -r '.notes_ar' yayin/istek.json)"
+              git config user.name "github-actions[bot]"; git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+              git add -A paketler latest.json kaynak/js/version.js kaynak/js/kurum-rules.js
+              git commit -m "Paket v$ISTEK (otomatik)" && git push
+            fi
+          fi
       - name: Paketi doğrula ve sürümü aç
         env:
           GH_TOKEN: ${{ github.token }}
@@ -34,4 +53,4 @@ jobs:
             echo "Program bu sürümü kendiliğinden bulur ve tek dokunuşla kurar."
           } > notlar.md
           cp latest.json "latest-v$SV.json"
-          gh release create "v$SV" "$FILE" "latest-v$SV.json" --title "v$SV" --notes-file notlar.md --target "$GITHUB_SHA"
+          gh release create "v$SV" "$FILE" "latest-v$SV.json" --title "v$SV" --notes-file notlar.md --target "$(git rev-parse HEAD)"

@@ -1,0 +1,27 @@
+/* ---------- v2.5.0: Danışman (yapay zeka) ---------- */
+.ai-wrap{display:grid;grid-template-columns:230px 1fr;gap:16px;height:calc(100% - 4px);min-height:420px}
+.ai-side{display:flex;flex-direction:column;gap:8px;margin:0;min-height:0}.ai-side h4{margin:6px 0 0}.btn.full{width:100%;justify-content:center}
+.ai-convs{flex:1;overflow:auto;display:flex;flex-direction:column;gap:4px;min-height:0}
+.ai-conv{display:flex;flex-direction:column;align-items:flex-start;gap:2px;text-align:start;border:1px solid transparent;background:transparent;color:var(--tx);border-radius:9px;padding:7px 9px;cursor:pointer;font-size:13px;width:100%}
+.ai-conv small{color:var(--tx3);font-size:11px}.ai-conv:hover{background:rgba(255,255,255,.06)}.ai-conv.on{background:rgba(33,150,243,.18);border-color:rgba(33,150,243,.4)}
+.ai-main{display:flex;flex-direction:column;margin:0;min-height:0;padding:14px 16px}
+.ai-head{display:flex;align-items:flex-start;gap:10px}.ai-head>div{flex:1}.ai-head .ph{margin:0 0 4px}.ai-head p{margin:0}.ai-src{align-self:center;max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ai-st{margin:6px 0 4px}.ai-st select{max-width:420px}
+.ai-msgs{flex:1;overflow:auto;min-height:220px;display:flex;flex-direction:column;gap:12px;padding:8px 4px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.ai-msg{max-width:88%;border-radius:14px;padding:10px 14px;position:relative;line-height:1.55}
+.ai-msg.u{align-self:flex-end;background:linear-gradient(180deg,rgba(33,150,243,.35),rgba(21,101,192,.35));border:1px solid rgba(33,150,243,.45);border-bottom-inline-end-radius:4px}
+.ai-msg.a{align-self:flex-start;background:var(--panel2);border:1px solid var(--line);border-bottom-inline-start-radius:4px;max-width:96%}
+.ai-msg.err{border-color:rgba(239,83,80,.6)}
+.ai-meta{font-size:11.5px;color:var(--tx3);display:flex;align-items:center;gap:5px;margin-bottom:4px}.ai-meta .ic{width:14px;height:14px;color:var(--amber)}
+.ai-body p{margin:0 0 8px}.ai-body p:last-child{margin:0}.ai-body ul,.ai-body ol{margin:4px 0 8px;padding-inline-start:22px}.ai-body li{margin:2px 0}
+.ai-body h3,.ai-body h4,.ai-body h5,.ai-body h6{margin:10px 0 4px;font-size:14px;color:var(--sky)}.ai-body pre{background:rgba(0,0,0,.25);padding:8px 10px;border-radius:8px;overflow:auto;font-size:12.5px}.ai-body code{background:rgba(255,255,255,.1);padding:1px 5px;border-radius:5px;font-size:12.5px}
+.ai-body table.mdt{margin:6px 0;font-size:13px}.ai-body .mdt th,.ai-body .mdt td{padding:4px 8px;border:1px solid var(--line)}
+.ai-think{color:var(--tx3);font-style:italic;animation:aiPulse 1.2s infinite}@keyframes aiPulse{0%,100%{opacity:.5}50%{opacity:1}}
+.ai-not{margin-top:6px;font-size:12.5px;color:var(--amber)}.ai-not.muted{color:var(--tx3)}
+.ai-act{position:absolute;top:4px;inset-inline-end:4px;display:flex;gap:2px;opacity:0;transition:.15s}.ai-msg:hover .ai-act{opacity:1}.ai-act .ib{min-width:26px;height:26px}.ai-act .ic{width:15px;height:15px}
+.ai-sug{display:flex;flex-wrap:wrap;gap:6px;padding:8px 0 2px;align-items:center}.ai-sug .chip{white-space:normal;text-align:start}
+.ai-form{display:flex;gap:8px;align-items:flex-end;padding-top:8px}.ai-form textarea{flex:1;resize:vertical;min-height:44px;max-height:180px}
+.ai-empty{margin:auto;text-align:center}
+.ai-top{color:var(--amber)}.ai-top:hover{color:#ffe082}
+html.light .ai-msg.u{background:linear-gradient(180deg,rgba(33,150,243,.18),rgba(21,101,192,.18))}html.light .ai-body pre{background:rgba(0,0,0,.06)}html.light .ai-body code{background:rgba(0,0,0,.07)}
+@media (max-width:900px){.ai-wrap{grid-template-columns:1fr;height:auto}.ai-side{order:2;max-height:200px}.ai-convs{flex-direction:row;flex-wrap:wrap}.ai-conv{width:auto}.ai-msgs{min-height:300px;max-height:60vh}.ai-msg{max-width:96%}.ai-act{opacity:1}}

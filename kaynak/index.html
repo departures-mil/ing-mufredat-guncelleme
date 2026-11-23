@@ -6,6 +6,7 @@
 <meta name="theme-color" content="#061327">
 <title>İngilizce Müfredat Sistemi</title>
 <link rel="stylesheet" href="css/app.css">
+<link rel="stylesheet" href="css/danisman.css">
 </head>
 <body>
 <div id="app"></div>
@@ -71,7 +72,8 @@
 <script src="js/gsearch.js"></script>
 <script src="js/kurum-rules.js"></script>
 <script src="js/v24.js"></script>
-<script>Kullanim.baslat({uygulama:'ing-mufredat',bulut:true,ai:false,haric:['mufredat-bc0ad'],linkAc:function(u){try{Platform.openUrl(u)}catch(e){window.open(u,'_blank')}},dil:function(){return document.documentElement.lang},proje:function(){try{var s=Store.local.sync;return s&&s.enabled&&s.config?s.config.projectId:''}catch(e){return ''}}});</script>
+<script src="js/danisman.js"></script>
+<script>Kullanim.baslat({uygulama:'ing-mufredat',bulut:true,ai:true,aiAd:function(){try{return Danisman.kaynak()}catch(e){return ''}},haric:['mufredat-bc0ad'],linkAc:function(u){try{Platform.openUrl(u)}catch(e){window.open(u,'_blank')}},dil:function(){return document.documentElement.lang},proje:function(){try{var s=Store.local.sync;return s&&s.enabled&&s.config?s.config.projectId:''}catch(e){return ''}}});</script>
 <script>App.start();</script>
 <script src="js/duyuru.js"></script>
 <script>Duyuru.baslat({uygulama:"ing-mufredat",surum:String(window.APP_SEMVER||window.APP_VERSION||"2.4.0"),dil:function(){return document.documentElement.lang}});</script>

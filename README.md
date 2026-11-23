@@ -40,3 +40,13 @@ sürümden kendiliğinden bir önceki sürüme döner.
   ya da programı kurar ve kısayol açar (kayıtlar `%APPDATA%\IngMufredatSistemi` içinde kalır). Kabuk v2 kurulumları için bir kerelik.
 - `kurulum/IngMufredat-3.0.0.apk` — yeni Android kabuğu (paket `com.departures.ingmufredat`, yeni anahtar
   `_Anahtarlar\IngMufredat\ingmufredat.jks`); eski uygulamanın yanına kurulur, kayıtlar eşitlemeyle gelir. Derleme: `kabuk/android/derle-apk.sh`.
+
+## v2.5.0 (2026-11-23) — Danışman (yapay zeka)
+- `kaynak/js/danisman.js`: menüde Danışman sayfası (+ üst çubukta ✦, Ctrl + J). Sistem metni programdaki gerçek verilerden kurulur
+  (müfredat özeti, sınıf durumu, seçili öğrencinin eksik maddeleri/değerlendirmeleri, sınav şemaları, kullanım notu); üç dil.
+- Sağlayıcılar (kullanıcının kendi anahtarı, yalnız cihazda `localStorage`): Gemini (SSE), OpenAI, Anthropic, OpenAI uyumlu (Groq/OpenRouter/Ollama/LM Studio).
+  Sıra: çevrimiçi → yerel sunucu → yerleşik çevrimdışı danışman (`Danisman.yerlesik`: öğrenci/sınıf raporu, dil bilgisi kartları, müfredat maddeleri, sınav şeması, sözlük, yardım bölümleri).
+- Ayarlar kartı `Danisman.ayarKartHtml()` Kullanım Limitleri'nin üstünde; `Kullanim.baslat({ai:true})` ile AI istek/token sayımı.
+- Yayın akışı (2.5.0’dan itibaren): Claude yalnız `kaynak/` dosyalarını ve `yayin/istek.json` (semver + üç dilde not) dosyasını gönderir;
+  GitHub Actions (`surum.yml`) paketi üretir, `paketler/` + `latest.json` + `version.js` dosyalarını main’e yazar ve Release’i açar.
+  İmza için depo gizli değişkeni `ING_IMZA_ANAHTARI` (32 baytlık tohumun base64’ü) eklenirse paketler kendiliğinden imzalanır.
