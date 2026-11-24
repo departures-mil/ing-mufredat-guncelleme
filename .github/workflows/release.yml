@@ -164,6 +164,7 @@ jobs:
       version: ${{ needs.build-win.outputs.version }}
       file_prefix: IngMufredat
       release_title: İngilizce Müfredat Sistemi v${{ needs.build-win.outputs.version }}
+      min_version: 3.1.1
       files: ${{ needs.build-android.outputs.files }}
       notes_json: release-notes.json
       core_ref: main
