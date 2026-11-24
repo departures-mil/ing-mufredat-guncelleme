@@ -1,13 +1,13 @@
 {
- "version": "2.500",
- "semver": "2.5.0",
- "file": "paketler/ing_2_500.b64",
- "sha256": "f35fbbc994acc36d67fc15195e346859fb5ae8f52d3d4672e53be04596d34a99",
- "size": 6493949,
- "gzlen": 2809424,
- "date": "2026-11-23T07:37:51Z",
+ "version": "2.501",
+ "semver": "2.5.1",
+ "file": "paketler/ing_2_501.b64",
+ "sha256": "e5e6a8a53adfa80ff1f597daced0171393162e6ac06603cb72fd06aa18f44138",
+ "size": 6676403,
+ "gzlen": 2891288,
+ "date": "2026-11-24T09:00:47Z",
  "minShell": 2,
- "notes_tr": "• Danışman (yapay zeka): menüde yeni Danışman sayfası ve üst çubukta ✦ düğmesi (Ctrl + J). İngilizce öğretimi, CEFR, ölçme-değerlendirme, ders planı ve öğrencileriniz hakkındaki soruları uzman bir eğitim danışmanı gibi, programdaki gerçek verilere (müfredat, sınıf durumu, seçilen öğrencinin eksikleri, sınav şemaları) bakarak yanıtlar.\n• Çevrimiçi: kendi hesabınızla Google Gemini (ücretsiz), OpenAI, Anthropic ya da OpenAI uyumlu sunucu (Groq, OpenRouter). Anahtar yalnız bu cihazda durur; kullanım Ayarlar → Kullanım Limitleri'nde görünür.\n• Çevrimdışı: internet ya da anahtar yoksa bilgisayardaki yerel sunucu (Ollama / LM Studio), o da yoksa programın yerleşik danışmanı yanıtlar.\n• Ayarlar → Yapay zeka: sağlayıcı, model, anahtar, bağlantı sınama, yanıt üslubu. Yardım'a Danışman bölümü eklendi.",
- "notes_en": "• Advisor (AI): new Advisor page in the menu and a ✦ button at the top (Ctrl + J). Answers questions about English teaching, CEFR, assessment, lesson plans and your students like an expert education consultant, drawing on the real data in the program (curriculum, class status, the selected student's gaps, exam schemes).\n• Online: with your own account on Google Gemini (free), OpenAI, Anthropic or an OpenAI-compatible server (Groq, OpenRouter). The key stays on this device only; usage appears in Settings → Usage limits.\n• Offline: without internet or a key, the local server on your computer (Ollama / LM Studio) answers, otherwise the program's built-in advisor.\n• Settings → AI: provider, model, key, connection test, answer style. An Advisor section was added to Help.",
- "notes_ar": "• المستشار (الذكاء الاصطناعي): صفحة «المستشار» الجديدة في القائمة وزر ✦ في الشريط العلوي (Ctrl + J). يجيب عن الأسئلة حول تدريس الإنجليزية ومستويات CEFR والتقييم وخطط الدروس وطلابك كمستشار تعليمي خبير، اعتماداً على البيانات الحقيقية في البرنامج (المنهج، حالة الصف، نواقص الطالب المختار، مخططات الامتحانات).\n• متصل: بحسابك الخاص في Google Gemini (مجاني) أو OpenAI أو Anthropic أو خادم متوافق مع OpenAI ‏(Groq، OpenRouter). يبقى المفتاح على هذا الجهاز فقط؛ يظهر الاستخدام في الإعدادات ← حدود الاستخدام.\n• دون اتصال: إن لم يتوفر إنترنت أو مفتاح يجيب الخادم المحلي على حاسوبك (Ollama / LM Studio)، وإلا فالمستشار المدمج في البرنامج.\n• الإعدادات ← الذكاء الاصطناعي: المزوّد والنموذج والمفتاح واختبار الاتصال وأسلوب الإجابة. أُضيف قسم «المستشار» إلى المساعدة."
+ "notes_tr": "• Yeni: ✦ Asistan Agent — bütün programlarınızdaki çalışmanızı izler ve daha verimli çalışmanız için öneriler verir (bildirim + program içi panel). Ayarlar'dan açılıp kapatılabilir.",
+ "notes_en": "• New: ✦ Assistant Agent — follows your work across all your programs and suggests how to work more effectively (notifications + in-app panel). Can be turned on/off in Settings.",
+ "notes_ar": "• جديد: ✦ الوكيل المساعد — يتابع عملك في جميع برامجك ويقترح طرقاً للعمل بكفاءة أكبر (إشعارات + لوحة داخل البرنامج). يمكن تشغيله أو إيقافه من الإعدادات."
 }
