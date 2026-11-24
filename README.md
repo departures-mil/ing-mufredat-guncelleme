@@ -50,3 +50,7 @@ sürümden kendiliğinden bir önceki sürüme döner.
 - Yayın akışı (2.5.0’dan itibaren): Claude yalnız `kaynak/` dosyalarını ve `yayin/istek.json` (semver + üç dilde not) dosyasını gönderir;
   GitHub Actions (`surum.yml`) paketi üretir, `paketler/` + `latest.json` + `version.js` dosyalarını main’e yazar ve Release’i açar.
   İmza için depo gizli değişkeni `ING_IMZA_ANAHTARI` (32 baytlık tohumun base64’ü) eklenirse paketler kendiliğinden imzalanır.
+
+## Asistan Agent (hazır, yayın bekliyor — 2026-11-24)
+✦ Asistan Agent eklendi: `fc-agent.js` (= ortak-cekirdek/web/dist/fc-agent.js) + `agent-baslat.js` arayüz klasöründe. Bütün programlardaki
+çalışmayı sayılarla izler, öneri verir (bildirim + ✦ panel), Ayarlar'da admin iletişim kartının önünde. Sonraki sürüm yayınlanınca kullanıcılara gider.
