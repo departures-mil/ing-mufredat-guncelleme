@@ -1,1 +1,11 @@
+node_modules/
+.derleme/
+dist/
 cikti/
+*.apk
+*.exe
+*.jks
+*.keystore
+*.pem
+keys/
+/test-sonuc/

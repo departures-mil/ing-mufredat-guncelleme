@@ -1,0 +1,80 @@
+{
+  "name": "ingmufredat-sistemi",
+  "version": "3.1.0",
+  "private": true,
+  "description": "İngilizce Müfredat Sistemi — CEFR müfredatı, öğrenci takibi, ölçme-değerlendirme ve çıktılar (Windows + Android)",
+  "author": "departures-mil",
+  "license": "UNLICENSED",
+  "repository": "departures-mil/ing-mufredat-guncelleme",
+  "scripts": {
+    "derle": "node araclar/derle.js",
+    "start": "node araclar/derle.js && electron .derleme/app",
+    "surum": "node araclar/surum.js",
+    "test": "node araclar/derle.js && node --test test/birim/*.test.js && node --test test/arayuz.test.js test/electron.test.js",
+    "test:birim": "node --test test/birim/*.test.js",
+    "dist": "node araclar/derle.js && electron-builder --win nsis --x64 --publish never",
+    "apk": "bash araclar/apk.sh",
+    "ekran": "node araclar/ekran.js",
+    "eski-kanal": "node araclar/eski-kanal.js"
+  },
+  "devDependencies": {
+    "@tesseract.js-data/eng": "1.0.0",
+    "electron": "33.4.11",
+    "electron-builder": "25.1.8",
+    "tesseract.js": "5.1.1",
+    "tesseract.js-core": "5.1.1"
+  },
+  "build": {
+    "appId": "com.departures.ingmufredat",
+    "productName": "Ing Mufredat Sistemi",
+    "electronVersion": "33.4.11",
+    "directories": {
+      "app": ".derleme/app",
+      "output": "dist",
+      "buildResources": "masaustu/kurulum"
+    },
+    "files": [
+      "**/*"
+    ],
+    "asar": true,
+    "electronLanguages": [
+      "tr",
+      "en-US",
+      "ar"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "masaustu/icon.ico",
+      "signAndEditExecutable": true,
+      "executableName": "Ing Mufredat Sistemi"
+    },
+    "nsis": {
+      "oneClick": true,
+      "perMachine": false,
+      "allowElevation": false,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "İngilizce Müfredat Sistemi",
+      "runAfterFinish": true,
+      "deleteAppDataOnUninstall": false,
+      "installerIcon": "masaustu/icon.ico",
+      "uninstallerIcon": "masaustu/icon.ico",
+      "multiLanguageInstaller": true,
+      "installerLanguages": [
+        "tr_TR",
+        "en_US",
+        "ar_SA"
+      ],
+      "language": "1055",
+      "include": "masaustu/kurulum/kurulum.nsh",
+      "artifactName": "IngMufredat-Setup-${version}.${ext}"
+    }
+  }
+}
