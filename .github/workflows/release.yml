@@ -18,9 +18,10 @@ permissions:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04   # Playwright Chromium 24.04'ü destekler (ubuntu-latest = 26.04 desteklenmiyor)
     steps:
       - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }   # test/kopru.test.js 2.5.1'in gerçek kabuğunu git geçmişinden alır
       - uses: actions/setup-node@v4
         with: { node-version: 22, cache: npm }
       - run: npm ci
