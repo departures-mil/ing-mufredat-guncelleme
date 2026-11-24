@@ -1,56 +1,19 @@
-# İngilizce Müfredat Sistemi — kaynak ve güncelleme kanalı
+# İngilizce Müfredat Sistemi
 
-Programın (masaüstü ve telefon) arayüz kaynağı ve uygulama içi güncellemeleri buradadır.
+CEFR seviyelerine (Pre-A1 – C2) göre İngilizce müfredatı, öğrenci takibi, ölçme-değerlendirme, ders programları, sınav kâğıtları,
+dil bilgisi, sözlük, kelime testi ve kurum antetli çıktılar. Windows (kurulum programı) ve Android. Ücretsizdir.
 
-- `kaynak/` — programın arayüz kaynağı (masaüstü/Android kabuğu, minShell 2, kurulu programdadır).
-- `latest.json` — son sürüm bilgisi. Program açılışta buna bakar.
-- `paketler/` — son sürüm paketi (gzip + base64). Önceki sürümler **Releases** sayfasında saklanır.
-- `firebase/kurum.rules` — kurumların kendi Firebase projesine yapıştıracağı güvenlik kuralları.
-- `araclar/` — yayın ve imza araçları.
+- **İndir:** [Sürümler](https://github.com/departures-mil/ing-mufredat-guncelleme/releases/latest) — `IngMufredat-Setup-X.Y.Z.exe` (Windows),
+  `IngMufredat-X.Y.Z-android.apk` (Android). Program sonraki güncellemeleri kendisi bulur ve tek tuşla kurar (yalnızca değişen kısımlar iner).
+- **Eşitleme:** kurumun KENDİ ücretsiz Firebase hesabıyla (Ayarlar → Eşitleme; kurallar `firebase/kurum.rules`) ya da internetsiz,
+  aynı Wi‑Fi'deki cihazlar arasında. Kayıtlar yalnız cihazlarda ve kurumun kendi hesabında durur; hiçbir kayıt silinmez ya da ezilmez.
+- **Yapay zeka:** kendi anahtarınızla (Gemini, OpenAI, Anthropic, Groq, Ollama/LM Studio) ya da çevrimdışı yerleşik danışman.
 
-Kayıtlar ve yedekler bu depoda **bulunmaz**. Onlar yalnızca kullanıcının cihazında (`%APPDATA%\IngMufredatSistemi`) ve kurumun kendi Firebase hesabında durur.
-
-## Sürüm numaraları
-Görünen sürüm semver'dir: v2.4.0, v2.4.1 … Kabuğa giden kimlik eski kurulumlarla uyum için `ana.ikincilYAMA` biçimindedir (2.4.1 → `2.401`).
-
-## Yeni sürüm (tek adım)
+## Geliştirme
 ```
-python3 araclar/yayinla.py 2.4.1 "tr notu" "en note" "ar ملاحظة" --anahtar <gizli-anahtar-dosyası>
-git add -A && git commit -m "v2.4.1" && git push
+npm ci
+npm test                    # birim + arayüz (Playwright) + Electron açılış testi
+npm start                   # derle ve Electron'da aç
+node araclar/ekran.js ekran # ekran görüntüleri
 ```
-GitHub Actions (`.github/workflows/surum.yml`) paketi doğrular ve `v2.4.1` sürüm sayfasını kendisi açar.
-
-## Paket imzası
-Paketler Ed25519 ile imzalanır. Gizli anahtar yalnız yöneticinin bilgisayarında durur (`C:\Claude Programlarım\_Anahtarlar`).
-Açık anahtar `kaynak/js/fbconfig.js` → `window.UPD_KEYS` listesine yazılınca program imzasız paketi kurmaz.
-Anahtar üretmek için: `python3 araclar/anahtar_uret.py ing-mufredat-imza.key`
-
-## Geri dönüş
-Sürümler geriye kurulmaz (eski sürüm numarası yeni sayılmaz). Bir sürümde sorun olursa önceki sürümün içeriği
-Releases'tan alınır ve daha yüksek bir numarayla (ör. v2.4.2) yeniden yayınlanır. Program da ilk açılışı onaylanmayan
-sürümden kendiliğinden bir önceki sürüme döner.
-
-## Kabuk v3 (2026-11-22) — Küçült, Wi‑Fi eşitleme, kabuk güncellemesi
-- `kabuk/` masaüstü kabuğunun kaynağı (Electron 33.2.1): `main.js`, `preload.js`, `lan.js` (aynı modemde eşitleme sunucusu,
-  port 47851, 6 haneli kod), `enjekte.js` (arayüze Küçült ve 📶 düğmelerini ekler; birleştirmeyi arayüzün `Birlestir`
-  modülüyle yapar — tabansız birleştirme hiçbir kaydı silmez). Eklenti arayüz sürümünden bağımsızdır; `kaynak/`'a dokunmaz.
-- Kabuk artık kendini de günceller: `kabuk/kabuk.json` (Ed25519 imzalı). Yayın: `node araclar/kabuk_yayinla.js 3.0.1 <kabuk-imza.pem>`
-  (anahtar `C:\Claude Programlarım\_Anahtarlar\IngMufredat\kabuk-imza.pem`).
-- `kurulum/IngMufredat_Sistemi_v3.exe` — tek dosyalık program: açılınca bilgisayarda kurulu eski programın kabuğunu yeniler
-  ya da programı kurar ve kısayol açar (kayıtlar `%APPDATA%\IngMufredatSistemi` içinde kalır). Kabuk v2 kurulumları için bir kerelik.
-- `kurulum/IngMufredat-3.0.0.apk` — yeni Android kabuğu (paket `com.departures.ingmufredat`, yeni anahtar
-  `_Anahtarlar\IngMufredat\ingmufredat.jks`); eski uygulamanın yanına kurulur, kayıtlar eşitlemeyle gelir. Derleme: `kabuk/android/derle-apk.sh`.
-
-## v2.5.0 (2026-11-23) — Danışman (yapay zeka)
-- `kaynak/js/danisman.js`: menüde Danışman sayfası (+ üst çubukta ✦, Ctrl + J). Sistem metni programdaki gerçek verilerden kurulur
-  (müfredat özeti, sınıf durumu, seçili öğrencinin eksik maddeleri/değerlendirmeleri, sınav şemaları, kullanım notu); üç dil.
-- Sağlayıcılar (kullanıcının kendi anahtarı, yalnız cihazda `localStorage`): Gemini (SSE), OpenAI, Anthropic, OpenAI uyumlu (Groq/OpenRouter/Ollama/LM Studio).
-  Sıra: çevrimiçi → yerel sunucu → yerleşik çevrimdışı danışman (`Danisman.yerlesik`: öğrenci/sınıf raporu, dil bilgisi kartları, müfredat maddeleri, sınav şeması, sözlük, yardım bölümleri).
-- Ayarlar kartı `Danisman.ayarKartHtml()` Kullanım Limitleri'nin üstünde; `Kullanim.baslat({ai:true})` ile AI istek/token sayımı.
-- Yayın akışı (2.5.0’dan itibaren): Claude yalnız `kaynak/` dosyalarını ve `yayin/istek.json` (semver + üç dilde not) dosyasını gönderir;
-  GitHub Actions (`surum.yml`) paketi üretir, `paketler/` + `latest.json` + `version.js` dosyalarını main’e yazar ve Release’i açar.
-  İmza için depo gizli değişkeni `ING_IMZA_ANAHTARI` (32 baytlık tohumun base64’ü) eklenirse paketler kendiliğinden imzalanır.
-
-## Asistan Agent (v2.5.1, 2026-11-24)
-✦ Asistan Agent eklendi: `fc-agent.js` (= ortak-cekirdek/web/dist/fc-agent.js) + `agent-baslat.js` arayüz klasöründe. Bütün programlardaki
-çalışmayı sayılarla izler, öneri verir (bildirim + ✦ panel), Ayarlar'da admin iletişim kartının önünde. Sonraki sürüm yayınlanınca kullanıcılara gider.
+Ayrıntılar ve kurallar: [CLAUDE.md](CLAUDE.md). Depo kökündeki `latest.json` ve `paketler/` yalnız eski (≤3.0) kurulumların köprüsüdür.

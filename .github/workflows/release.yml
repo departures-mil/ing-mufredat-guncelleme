@@ -1,0 +1,168 @@
+# İngilizce Müfredat Sistemi — test → derleme (Windows: NSIS kurulum + app.asar; Ubuntu: imzalı APK) → GitHub Release
+# (ortak çekirdek reusable-release: latest.json + son 5 sürümden FCD1 yamaları).
+# Yayın: sürümü değiştirin (node araclar/surum.js X.Y.Z + release-notes.json), main'e birleştirin, sonra
+#   gh api -X POST repos/departures-mil/ing-mufredat-guncelleme/actions/workflows/release.yml/dispatches -f ref=main
+# Entegrasyon dallarında (ortak-cekirdek-*) yalnız test + derleme çalışır.
+# Android: ANDROID_KEYSTORE_B64 + ANDROID_KEYSTORE_PASS [+ ANDROID_KEY_PASS, ANDROID_KEY_ALIAS (yoksa keystore'daki ilk takma ad)].
+#   APK sertifikası 3.0.0 APK'sınınkiyle (EXPECTED_CERT) aynı olmalı; değilse android kanalı yayınlanmaz (eskinin üzerine kurulamazdı).
+# Release'ten SONRA eski kurulumlar için köprü: node araclar/derle.js && node araclar/eski-kanal.js → latest.json + paketler/ → main.
+name: release
+on:
+  push:
+    tags: ['v*']
+    branches: ['ortak-cekirdek-*']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: npm }
+      - run: npm ci
+      - name: Electron ve Chromium için sistem kitaplıkları
+        run: sudo apt-get update -q && (sudo apt-get install -y -q xvfb libnss3 libgbm1 libasound2t64 libgtk-3-0 >/dev/null || sudo apt-get install -y -q xvfb libnss3 libgbm1 libgtk-3-0)
+      - name: Playwright (arayüz testleri)
+        run: |
+          npm i --no-save playwright-core@1.56.1
+          npx -y playwright@1.56.1 install --with-deps chromium
+      - name: npm test (birim + arayüz + Electron açılış testi)
+        env:
+          ING_ARAYUZ_ZORUNLU: '1'
+        run: |
+          J="$(ls "$ANDROID_HOME"/platforms/android-*/android.jar 2>/dev/null | sort -V | tail -1 || true)"
+          [ -n "$J" ] && export ANDROID_JAR="$J"
+          npm test
+      - name: Etiket = package.json sürümü
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: |
+          v="$(node -p "require('./package.json').version")"
+          [ "v$v" = "${GITHUB_REF_NAME}" ] || { echo "::error::etiket ${GITHUB_REF_NAME} ≠ package.json v$v"; exit 1; }
+
+  build-win:
+    needs: test
+    runs-on: windows-latest
+    outputs:
+      version: ${{ steps.ver.outputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: npm }
+      - run: npm ci
+      - id: ver
+        shell: bash
+        run: echo "version=$(node -p "require('./package.json').version")" >> "$GITHUB_OUTPUT"
+      - name: NSIS kurulum + app.asar
+        run: npm run dist
+        env:
+          CSC_IDENTITY_AUTO_DISCOVERY: 'false'
+      - name: Windows duman testi (paketlenmiş program açılır, eski kayıt dosyası okunur)
+        shell: bash
+        run: |
+          set -euo pipefail
+          VERI="$RUNNER_TEMP/ing-veri"; mkdir -p "$VERI/veri"
+          echo '{"schema":1,"students":{"s1":{"id":"s1","name":"Eski Kayit","marks":{}}}}' > "$VERI/veri/db.json"
+          OUT="$RUNNER_TEMP/duman.txt"; rm -f "$OUT"
+          ING_SMOKE=1 ING_VERI="$(cygpath -w "$VERI")" ING_SMOKE_OUT="$(cygpath -w "$OUT")" timeout 150 "dist/win-unpacked/Ing Mufredat Sistemi.exe" || true
+          cat "$OUT"
+          node -e "const l=require('fs').readFileSync(process.argv[1],'utf8').trim().slice(10);const o=JSON.parse(l);if(!o.ok||!o.ogrenciler.includes('Eski Kayit')){console.error(l);process.exit(1)}" "$OUT"
+      - name: Yayınlanacak dosyaları topla
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir release
+          cp dist/win-unpacked/resources/app.asar release/app.asar
+          cp dist/*Setup*.exe release/
+          ls -la release && sha256sum release/*
+      - uses: actions/upload-artifact@v4
+        with:
+          name: release-win
+          path: release/
+          retention-days: 5
+
+  build-android:
+    needs: test
+    runs-on: ubuntu-latest
+    outputs:
+      apk: ${{ steps.apk.outputs.apk }}
+      files: ${{ steps.files.outputs.files }}
+    env:
+      HAS_KEY: ${{ secrets.ANDROID_KEYSTORE_B64 != '' && secrets.ANDROID_KEYSTORE_PASS != '' }}
+      EXPECTED_CERT: 45c0abce8039538bfa4dbd1421869f7945a5ada04f261db176958adf32a5ad7f
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        if: env.HAS_KEY == 'true'
+        with: { node-version: 22, cache: npm }
+      - run: npm ci
+        if: env.HAS_KEY == 'true'
+      - name: Android SDK (platform 35, build-tools 35)
+        if: env.HAS_KEY == 'true'
+        run: |
+          SM="$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager"
+          [ -f "$ANDROID_HOME/platforms/android-35/android.jar" ] || yes | "$SM" "platforms;android-35" >/dev/null
+          [ -d "$ANDROID_HOME/build-tools/35.0.0" ] || yes | "$SM" "build-tools;35.0.0" >/dev/null
+      - name: İmzalı APK + sertifika denetimi
+        id: apk
+        if: env.HAS_KEY == 'true'
+        env:
+          ANDROID_KEYSTORE_B64: ${{ secrets.ANDROID_KEYSTORE_B64 }}
+          ANDROID_KEYSTORE_PASS: ${{ secrets.ANDROID_KEYSTORE_PASS }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ANDROID_KEY_PASS: ${{ secrets.ANDROID_KEY_PASS }}
+        run: |
+          set -euo pipefail
+          echo "$ANDROID_KEYSTORE_B64" | base64 -d > "$RUNNER_TEMP/ing.keystore"
+          export ANDROID_KEYSTORE="$RUNNER_TEMP/ing.keystore"
+          [ -n "${ANDROID_KEY_PASS:-}" ] || unset ANDROID_KEY_PASS
+          [ -n "${ANDROID_KEY_ALIAS:-}" ] || unset ANDROID_KEY_ALIAS
+          bash araclar/apk.sh
+          rm -f "$ANDROID_KEYSTORE"
+          BT="$(ls -d "$ANDROID_HOME"/build-tools/*/ | sort -V | tail -1)"
+          CERT="$("$BT/apksigner" verify --print-certs cikti/IngMufredat-*.apk | grep -m1 'certificate SHA-256 digest' | awk '{print $NF}')"
+          echo "APK sertifikası: $CERT"
+          if [ "$CERT" != "$EXPECTED_CERT" ]; then
+            echo "::error::APK sertifikası 3.0.0 APK'sınınkiyle aynı değil ($CERT ≠ $EXPECTED_CERT). Bu anahtarla imzalanan APK eski uygulamanın üzerine kurulamaz; android kanalı yayınlanmadı."
+            echo "apk=false" >> "$GITHUB_OUTPUT"; exit 0
+          fi
+          mkdir release && cp cikti/IngMufredat-*.apk release/ && rm -f release/*imzasiz*
+          ls -la release && sha256sum release/*
+          echo "apk=true" >> "$GITHUB_OUTPUT"
+      - name: Anahtar yok → Android atlandı
+        if: env.HAS_KEY != 'true'
+        run: echo "::warning::ANDROID_KEYSTORE_B64 / ANDROID_KEYSTORE_PASS secret'ları tanımlı değil — APK derlenmedi, android kanalı bu sürümde yok."
+      - uses: actions/upload-artifact@v4
+        if: steps.apk.outputs.apk == 'true'
+        with:
+          name: release-android
+          path: release/
+          retention-days: 5
+      - name: Yayınlanacak kanallar
+        id: files
+        run: |
+          {
+            echo 'files<<KANALLAR'
+            echo 'win-app=app.asar'
+            echo 'win-setup=*Setup*.exe'
+            if [ "${{ steps.apk.outputs.apk }}" = "true" ]; then echo 'android=*.apk'; fi
+            echo 'KANALLAR'
+          } >> "$GITHUB_OUTPUT"
+
+  release:
+    needs: [test, build-win, build-android]
+    if: startsWith(github.ref, 'refs/tags/v') || (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main')
+    permissions:
+      contents: write
+    uses: departures-mil/ortak-cekirdek/.github/workflows/reusable-release.yml@main
+    with:
+      app_id: ing-mufredat
+      version: ${{ needs.build-win.outputs.version }}
+      file_prefix: IngMufredat
+      release_title: İngilizce Müfredat Sistemi v${{ needs.build-win.outputs.version }}
+      files: ${{ needs.build-android.outputs.files }}
+      notes_json: release-notes.json
+      core_ref: main
