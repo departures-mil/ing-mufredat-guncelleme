@@ -10,7 +10,7 @@
     "derle": "node araclar/derle.js",
     "start": "node araclar/derle.js && electron .derleme/app",
     "surum": "node araclar/surum.js",
-    "test": "node araclar/derle.js && node --test test/birim/*.test.js && node --test test/arayuz.test.js test/electron.test.js test/kopru.test.js",
+    "test": "node araclar/derle.js && node --test test/birim/*.test.js && node --test --test-concurrency=1 test/arayuz.test.js test/electron.test.js test/kopru.test.js",
     "test:birim": "node --test test/birim/*.test.js",
     "dist": "node araclar/derle.js && electron-builder --win nsis --x64 --publish never",
     "apk": "bash araclar/apk.sh",
