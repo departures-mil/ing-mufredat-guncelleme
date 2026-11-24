@@ -1,13 +1,13 @@
 {
- "version": "3.101",
- "semver": "3.1.1",
- "file": "paketler/ing_3_101.b64",
- "sha256": "162930a302d7528e2419c6756ba23d3a2ea8a2f25acbbaa1b113e556c75fd2dd",
- "size": 7083384,
- "gzlen": 3423256,
- "date": "2026-11-24T21:18:22Z",
+ "version": "3.102",
+ "semver": "3.1.2",
+ "file": "paketler/ing_3_102.b64",
+ "sha256": "4a4a50bc8981205f3a2a2bc02fcfe4a82c1f62a24af97be1fc435de2e23ea35d",
+ "size": 7082856,
+ "gzlen": 3422964,
+ "date": "2026-11-24T21:32:34Z",
  "minShell": 2,
- "notes_tr": "Güncellemeler artık tamamen kendiliğinden: yeni sürüm arka planda sessizce indirilir, program kapanınca pencere açmadan kurulur; bir sonraki açılışta yeni sürüm gelir. Hemen kurmak için Güncelle → «Şimdi kur ve yeniden aç». Kurulum gereken güncellemeler de sessiz yapılır. Kayıtlara dokunulmaz.",
- "notes_en": "Updates are now fully automatic: the new version downloads quietly in the background and installs without any window when the program closes; the next start opens the new version. To install right away: Update → «Install now and reopen». Updates that need the installer also run silently. Records are not touched.",
- "notes_ar": "أصبحت التحديثات تلقائية بالكامل: يُنزَّل الإصدار الجديد بهدوء في الخلفية ويُثبَّت دون أي نافذة عند إغلاق البرنامج، ويُفتح الإصدار الجديد في المرة التالية. للتثبيت فوراً: تحديث ← «ثبّت الآن وأعد الفتح». التحديثات التي تحتاج إلى برنامج التثبيت تتم بصمت أيضاً. لا تُمَسّ السجلات."
+ "notes_tr": "Eski sürümlerden bu sürüme geçiş bir kez tam kurulumla yapılır (eski güncelleyicideki siyah pencere sorunu yaşanmaz). Sonraki güncellemeler yine arka planda, kendiliğinden. Kayıtlar korunur.",
+ "notes_en": "Moving from older versions to this one is done once with a full install (avoids the black-window problem of the old updater). Later updates again run by themselves in the background. Records are kept.",
+ "notes_ar": "يتم الانتقال من الإصدارات القديمة إلى هذا الإصدار مرة واحدة بتثبيت كامل (تجنباً لمشكلة النوافذ السوداء في المحدِّث القديم). التحديثات اللاحقة تتم تلقائياً في الخلفية. تبقى السجلات محفوظة."
 }
