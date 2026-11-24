@@ -42,7 +42,7 @@ ortak çekirdek üzerinde yeniden düzenlendi (eski yama katmanları v24.js / en
 
 ## Güncelleme / yayın
 - Yalnız GitHub Releases + `latest.json` + FCD1 yama (ortak `reusable-release.yml`). Kanallar: `win-app` (app.asar), `win-setup`
-  (NSIS `IngMufredat-Setup-X.Y.Z.exe`, kullanıcı başına), `android` (APK; kurulu APK + yama → yeni APK, `Kopru.apkUpdate`).
+  (NSIS, sürüm sayfasında `IngMufredat-X.Y.Z-win-setup.exe`, kullanıcı başına), `android` (APK; kurulu APK + yama → yeni APK, `Kopru.apkUpdate`).
 - CI `.github/workflows/release.yml`: test (birim + Playwright + Electron xvfb) → build-win (NSIS + Windows duman testi) + build-android
   (secret'lar varsa; APK sertifikası 3.0.0 APK'sınınkiyle aynı olmalı: `45c0abce…ad7f`) → release (yalnız main'de workflow_dispatch ya da etiket).
   Yayın: `gh api -X POST repos/departures-mil/ing-mufredat-guncelleme/actions/workflows/release.yml/dispatches -f ref=main`.

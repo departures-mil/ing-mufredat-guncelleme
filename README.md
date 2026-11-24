@@ -3,7 +3,7 @@
 CEFR seviyelerine (Pre-A1 – C2) göre İngilizce müfredatı, öğrenci takibi, ölçme-değerlendirme, ders programları, sınav kâğıtları,
 dil bilgisi, sözlük, kelime testi ve kurum antetli çıktılar. Windows (kurulum programı) ve Android. Ücretsizdir.
 
-- **İndir:** [Sürümler](https://github.com/departures-mil/ing-mufredat-guncelleme/releases/latest) — `IngMufredat-Setup-X.Y.Z.exe` (Windows),
+- **İndir:** [Sürümler](https://github.com/departures-mil/ing-mufredat-guncelleme/releases/latest) — `IngMufredat-X.Y.Z-win-setup.exe` (Windows),
   `IngMufredat-X.Y.Z-android.apk` (Android). Program sonraki güncellemeleri kendisi bulur ve tek tuşla kurar (yalnızca değişen kısımlar iner).
 - **Eşitleme:** kurumun KENDİ ücretsiz Firebase hesabıyla (Ayarlar → Eşitleme; kurallar `firebase/kurum.rules`) ya da internetsiz,
   aynı Wi‑Fi'deki cihazlar arasında. Kayıtlar yalnız cihazlarda ve kurumun kendi hesabında durur; hiçbir kayıt silinmez ya da ezilmez.
