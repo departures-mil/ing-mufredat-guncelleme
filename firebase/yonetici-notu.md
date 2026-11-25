@@ -11,9 +11,11 @@ program program değiştirilmemeli. Önerilen en az kural:
 ```
 match /guncellemeler/{d=**} {
   allow read: if true;
-  allow write: if request.auth != null && request.auth.token.email == 'yonetici@example.invalid';
+  allow write: if request.auth != null && request.auth.token.email == '<YÖNETİCİ-E-POSTASI>';
 }
 ```
+
+`<YÖNETİCİ-E-POSTASI>` yerine Firebase konsolunda yöneticinin kendi adresi yazılır (adres depoya yazılmaz).
 
 Kurum verisi için `kurum.rules` içindeki `mufredat_ing` bölümü eklenebilir.
 Kurallar değiştirilmeden önce mevcut kurallar Firebase konsolundan yedeklenmelidir.

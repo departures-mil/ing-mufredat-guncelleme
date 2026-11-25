@@ -4,4 +4,5 @@
 window.FB_CONFIG = {};
 window.FB_REHBER = 'https://github.com/departures-mil/duyurular/blob/main/firebase-kurulum.md';
 window.FB_YAYIN = { projectId: 'mufredat-bc0ad' };
-window.FB_ADMIN_EMAIL = 'yonetici@example.invalid';
+// Yönetici hesabı programda açık yazılmaz: yalnız küçük harfli e-postanın SHA-256 özeti tutulur.
+window.FB_ADMIN_HASH = 'b1acd212aa26e8d1a66302ca74cf125228fea1e0cf805377ddcaabb5278722c1';

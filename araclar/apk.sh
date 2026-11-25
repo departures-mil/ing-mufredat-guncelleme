@@ -4,7 +4,7 @@
 # Android SDK: $ANDROID_TOOLS (bt/<sürüm>/, pf/android-35/) ya da $ANDROID_HOME / $ANDROID_SDK_ROOT (build-tools/, platforms/).
 # İmza: ANDROID_KEYSTORE (dosya) + ANDROID_KEYSTORE_PASS [+ ANDROID_KEY_ALIAS (yoksa keystore'daki ilk takma ad) + ANDROID_KEY_PASS].
 # Anahtar yoksa APK_IMZASIZ=1 ile yalnız derleme denenir. TÜM sürümler AYNI anahtarla imzalanmalı
-# (C:\Claude Programlarım\_Anahtarlar\IngMufredat\ingmufredat.jks); başka anahtarla kurulu uygulama güncellenmez.
+# (geliştiricinin bilgisayarındaki anahtar klasörü); başka anahtarla kurulu uygulama güncellenmez.
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 SURUM="$(node -p "require('$ROOT/araclar/surum.js').version()")"

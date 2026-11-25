@@ -59,10 +59,17 @@
       await Birlestir.loadBases(); await this.uyelik();
       this.attach();
     },
+    /** Yönetici hesabı mı? E-posta programda açık yazılmaz; SHA-256 özeti karşılaştırılır. */
+    async yoneticiMi(email) {
+      try {
+        const h = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(String(email || '').trim().toLowerCase()));
+        return [...new Uint8Array(h)].map((x) => x.toString(16).padStart(2, '0')).join('') === window.FB_ADMIN_HASH;
+      } catch (e) { return false; }
+    },
     async start() {
       const s = Store.local.sync;
       if (s && !s.config && window.FB_CONFIG && window.FB_CONFIG.apiKey) s.config = window.FB_CONFIG;
-      if (s && s.config && window.FB_YAYIN && s.config.projectId === window.FB_YAYIN.projectId && String(s.email || '').toLowerCase() !== String(window.FB_ADMIN_EMAIL || '').toLowerCase()) {
+      if (s && s.config && window.FB_YAYIN && s.config.projectId === window.FB_YAYIN.projectId && !(await this.yoneticiMi(s.email))) {
         Object.assign(s, { enabled: false, config: null, ortakKesildi: true }); delete s.cred; Store.saveLocal();
       }
       if (!s || !s.enabled || !s.config || !s.workspace) { this.setState('off'); return; }
