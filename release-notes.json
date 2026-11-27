@@ -1,5 +1,5 @@
 {
-  "tr": "Eski sürümlerden bu sürüme geçiş bir kez tam kurulumla yapılır (eski güncelleyicideki siyah pencere sorunu yaşanmaz). Sonraki güncellemeler yine arka planda, kendiliğinden. Kayıtlar korunur.",
-  "en": "Moving from older versions to this one is done once with a full install (avoids the black-window problem of the old updater). Later updates again run by themselves in the background. Records are kept.",
-  "ar": "يتم الانتقال من الإصدارات القديمة إلى هذا الإصدار مرة واحدة بتثبيت كامل (تجنباً لمشكلة النوافذ السوداء في المحدِّث القديم). التحديثات اللاحقة تتم تلقائياً في الخلفية. تبقى السجلات محفوظة."
+  "tr": "Telefonda «Güncelleme denetlenemedi / Failed to fetch» hatası düzeltildi: güncelleme denetimi artık telefonun kendisi tarafından yapılır; telefon yanlışlıkla Windows kurulum dosyasını indirmez. Bu sürümü telefona bir kez elle kurun (GitHub sürümler sayfasındaki APK); sonraki güncellemeler yine tek tuşla gelir. Kayıtlar korunur.",
+  "en": "Fixed «Could not check for updates / Failed to fetch» on phones: the update check is now done by the phone itself, and the phone never downloads the Windows installer by mistake. Install this version on the phone once by hand (the APK on the GitHub releases page); later updates come with one tap again. Records are kept.",
+  "ar": "تم إصلاح خطأ «تعذّر التحقق من التحديثات / Failed to fetch» على الهاتف: أصبح الهاتف نفسه يتحقق من التحديثات، ولن يُنزِّل ملف تثبيت ويندوز عن طريق الخطأ. ثبّت هذا الإصدار على الهاتف مرة واحدة يدوياً (ملف APK في صفحة الإصدارات على GitHub)؛ بعد ذلك تصل التحديثات بنقرة واحدة. تبقى السجلات محفوظة."
 }

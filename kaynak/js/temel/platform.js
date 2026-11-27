@@ -29,7 +29,7 @@
     f.srcdoc = html;
   });
   /* Yalnız bu adreslere kabuk üzerinden (CORS'suz) GET yapılır; Android ve masaüstü kabuğu da aynı listeyi uygular. */
-  const HTTP_IZIN = /^https:\/\/(translate\.googleapis\.com\/translate_a\/single\?|raw\.githubusercontent\.com\/departures-mil\/|api\.github\.com\/repos\/departures-mil\/)/;
+  const HTTP_IZIN = /^https:\/\/(translate\.googleapis\.com\/translate_a\/single\?|raw\.githubusercontent\.com\/departures-mil\/|api\.github\.com\/repos\/departures-mil\/|github\.com\/departures-mil\/ing-mufredat-guncelleme\/releases\/)/;
   const izinli = (url) => HTTP_IZIN.test(String(url || ''));
   const fetchText = async (url) => { const r = await fetch(url, { cache: 'no-store' }); if (!r.ok) throw new Error('HTTP ' + r.status); return r.text(); };
 

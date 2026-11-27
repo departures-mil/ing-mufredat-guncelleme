@@ -41,7 +41,7 @@ import java.util.regex.Pattern;
 final class Kopru {
     static final String AUTHORITY_SUFFIX = ".guncelleme";   // UpdateFileProvider (AndroidManifest.xml)
     /** Kabuk üzerinden GET yalnız bu adreslere (arayüz platform.js ve masaüstü main.js ile aynı liste). */
-    static final Pattern HTTP_IZIN = Pattern.compile("^https://(translate\\.googleapis\\.com/translate_a/single\\?|raw\\.githubusercontent\\.com/departures-mil/|api\\.github\\.com/repos/departures-mil/).*");
+    static final Pattern HTTP_IZIN = Pattern.compile("^https://(translate\\.googleapis\\.com/translate_a/single\\?|raw\\.githubusercontent\\.com/departures-mil/|api\\.github\\.com/repos/departures-mil/|github\\.com/departures-mil/ing-mufredat-guncelleme/releases/).*");
     private final MainActivity a;
     private final File dbFile;
     private File gelen = null;

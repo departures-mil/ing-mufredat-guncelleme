@@ -220,7 +220,16 @@
     await App.start();
     tasi();
     cekirdekDili();
-    FC.init({ app: APP, repo: REPO, version: VER, setupChannel: 'win-setup', announcements: true, whatsnew: false, update: !Platform.legacy, onboarding: false });
+    // Android: latest.json Java'da indirilir (WebView'den GitHub'a fetch CORS'a takılır → "Failed to fetch"); kurulum kanalı (win-setup) yalnız masaüstü
+    const AND = Platform.kind === 'android' && window.AndroidBridge && typeof window.AndroidBridge.httpGet === 'function';
+    if (AND && FC.host) FC.host.net = { maxBytes: 2 * 1024 * 1024, download: async (url, onProgress) => {
+      const t = window.AndroidBridge.httpGet(url);
+      if (t == null) throw Object.assign(new Error('NETWORK'), { code: 'NETWORK' });
+      const b = new TextEncoder().encode(String(t));
+      if (onProgress) try { onProgress({ done: b.length, finished: true }); } catch (e) { /* yok */ }
+      return b;
+    } };
+    FC.init({ app: APP, repo: REPO, version: VER, setupChannel: Platform.kind === 'android' ? undefined : 'win-setup', announcements: true, whatsnew: false, update: !Platform.legacy, onboarding: false });
     // "neler yeni": güncellemeden sonraki ilk açılışta (sürüm notları paketin içinde)
     try {
       if (FC.storage.get('whatsnew.seen', null) == null && Store.local.lastRunVer) FC.storage.set('whatsnew.seen', String(Store.local.lastRunVer));
