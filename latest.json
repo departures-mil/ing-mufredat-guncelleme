@@ -1,13 +1,13 @@
 {
- "version": "3.200",
- "semver": "3.2.0",
- "file": "paketler/ing_3_200.b64",
- "sha256": "0a69e90fc0b25d8286635608cfed663039070ed4be16486506e7e6f5a37cb429",
- "size": 7105236,
- "gzlen": 3434408,
- "date": "2026-11-28T11:33:20Z",
+ "version": "3.201",
+ "semver": "3.2.1",
+ "file": "paketler/ing_3_201.b64",
+ "sha256": "f9738c093c39e804d6d39026a163fc39ffef2d81a7f6093f08709ccf3b7a1d36",
+ "size": 12565579,
+ "gzlen": 6251736,
+ "date": "2026-11-28T12:12:21Z",
  "minShell": 2,
- "notes_tr": "Çevrimdışı yapay zekâ: Ayarlar → «Çevrimdışı yapay zekâ» kartından bir kez indirilen paketlerle internet yokken de en yüksek kalitede yazı tanıma (PaddleOCR PP-OCRv5 + Tesseract; Türkçe, İngilizce, Arapça) ve sinirsel çeviri (NLLB-200; tr ↔ en ↔ ar, resmî dil, havacılık terimleri çeviri belleğinden zorunlu). Ekran kartı varsa (DirectML) daha hızlı; bilgisayarda Ollama kuruluysa çeviride o kullanılır. İndirmede yüzde, MB, kalan MB, hız ve süre görünür; paketler güncellemelerde yeniden inmez. Kayıtlar korunur.",
- "notes_en": "Offline AI: packs downloaded once from Settings → «Offline AI» give the highest-quality text recognition (PaddleOCR PP-OCRv5 + Tesseract; Turkish, English, Arabic) and neural translation (NLLB-200; tr ↔ en ↔ ar, formal register, aviation terms enforced from the translation memory) even without internet. Faster with a graphics card (DirectML); if Ollama is installed on the computer it is used for translation. The download shows percent, MB, MB left, speed and time; packs are not downloaded again on updates. Records are kept.",
- "notes_ar": "ذكاء اصطناعي دون اتصال: حزم تُنزَّل مرة واحدة من الإعدادات ← «الذكاء الاصطناعي دون اتصال» توفّر أعلى جودة في قراءة النصوص (PaddleOCR PP-OCRv5 + Tesseract؛ التركية والإنجليزية والعربية) والترجمة العصبية (NLLB-200؛ تركي ↔ إنجليزي ↔ عربي بلغة رسمية مع إلزام مصطلحات الطيران من ذاكرة الترجمة) حتى دون إنترنت. أسرع مع بطاقة الرسوميات (DirectML)، وإذا كان Ollama مثبتًا على الحاسوب يُستخدم في الترجمة. يعرض التنزيل النسبة المئوية والميغابايت والمتبقي والسرعة والوقت، ولا يُعاد تنزيل الحزم عند التحديث. تبقى السجلات محفوظة."
+ "notes_tr": "Çevrimdışı yapay zekâ artık telefonda da: Ayarlar → «Çevrimdışı yapay zekâ» kartından bir kez indirilen paketlerle internet yokken fotoğraftan yazı tanıma (PaddleOCR PP-OCRv5 + Tesseract; Türkçe, İngilizce, Arapça) ve sinirsel çeviri (NLLB-200). Masaüstünde Türkçe harflerin (ı, İ, ş, ğ) okunması da iyileşti. Kayıtlar korunur.",
+ "notes_en": "Offline AI now on phones too: packs downloaded once from Settings → «Offline AI» give text recognition from photos (PaddleOCR PP-OCRv5 + Tesseract; Turkish, English, Arabic) and neural translation (NLLB-200) without internet. Reading of Turkish letters (ı, İ, ş, ğ) also improved on desktop. Records are kept.",
+ "notes_ar": "الذكاء الاصطناعي دون اتصال أصبح على الهاتف أيضاً: حزم تُنزَّل مرة واحدة من الإعدادات ← «الذكاء الاصطناعي دون اتصال» توفّر قراءة النصوص من الصور (PaddleOCR PP-OCRv5 + Tesseract؛ التركية والإنجليزية والعربية) والترجمة العصبية (NLLB-200) دون إنترنت. وتحسّنت أيضاً قراءة الحروف التركية (ı وİ وş وğ) على الحاسوب. تبقى السجلات محفوظة."
 }
