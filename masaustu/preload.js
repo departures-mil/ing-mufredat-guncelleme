@@ -5,6 +5,7 @@
 const { contextBridge, ipcRenderer } = require('electron');
 require('./cekirdek/fc-preload.js');
 const call = (ch, ...a) => ipcRenderer.invoke(ch, ...a);
+require('./cekirdek/yerel-zeka/fc-yerel-zeka-preload').expose(contextBridge, ipcRenderer); // window.fcYerelZeka
 contextBridge.exposeInMainWorld('desktop', {
   shell: 'fc',
   saveDb: (json) => call('db:save', json),

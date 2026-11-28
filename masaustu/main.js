@@ -94,6 +94,7 @@ function smoke() {
           lan: !!(window.Lan && Lan.var()), store: !!(window.Store && Store.db && Store.db.curriculum),
           ogrenciler: window.Store && Store.db ? Object.values(Store.db.students || {}).map((s) => s.name) : [],
           ayarSirasi: (UI.go('settings'), [...document.querySelectorAll('.settings-grid > [data-fc-card], .settings-grid > .card')].map((c) => c.getAttribute('data-fc-card') || c.id || '')),
+          yerelZeka: !!window.fcYerelZeka && !!document.querySelector('#yzKart .fcyz-card'),
           errors: (window.__ingErrors || []).slice(0, 5)
         })`);
         r.fullscreen = win.isFullScreen();
@@ -169,6 +170,8 @@ app.whenReady().then(() => {
   ipcMain.handle('app:quit', () => app.quit());
 
   // ---- Wi‑Fi eşitleme: taşıma burada (HMAC imzalı), birleştirme arayüzde (window.__ingLanIn)
+  // Çevrimdışı yapay zekâ (OCR + çeviri): paketler kullanıcı klasörüne bir kez iner (ortak çekirdek web/yerel-zeka)
+  try { require('./cekirdek/yerel-zeka/fc-yerel-zeka-main').install({ app, ipcMain }); } catch (e) { console.error('yerel-zeka', e); }
   const LAN = require('./lan-sunucu');
   const gelen = async (metin) => {
     const s = await win.webContents.executeJavaScript('window.__ingLanIn ? window.__ingLanIn(' + JSON.stringify(metin) + ') : null');

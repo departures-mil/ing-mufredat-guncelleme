@@ -28,6 +28,7 @@
     "js/temel/docmodel.js",
     "js/temel/render-html.js",
     "js/temel/render-docx.js",
+    "cekirdek/fc-yerel-zeka-ui.js",
     "js/temel/ocr.js",
     "js/temel/kurum-rules.js",
     "js/temel/ceviri.js",

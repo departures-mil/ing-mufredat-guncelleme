@@ -45,6 +45,7 @@
     ${Kurum.cakismaKart()}
     ${arsivKart()}
     ${Danisman.ayarKartHtml()}
+    ${window.FCYZ && FCYZ.available() ? `<div class="card" id="yzKart"><h3>${icon('cloud')} ${esc(FCYZ.title({ lang: document.documentElement.lang }))}</h3></div>` : ''}
     <div class="card"><h3>${t('backup')}</h3><div class="row"><button class="btn" id="expBtn">${icon('dl')} ${t('exportData')}</button><label class="btn">${icon('ul')} ${t('importData')}<input type="file" accept=".json,application/json" id="impIn" hidden></label>${Platform.kind === 'desktop' ? `<button class="btn ghost" id="bkFolder">${t('openBackupFolder')}</button>` : ''}</div>${Platform.kind === 'desktop' ? `<p class="muted sm">${t('autoBackupInfo')}</p>` : ''}</div>
     ${kisayolKart()}`;
     const m0 = m;
@@ -98,6 +99,7 @@
     kartlar.forEach((k) => k.classList.add('card'));
     UI.ayarIzgara(m0, kartlar);
     m = m0;   // olay işleyicileri kartları artık ızgarada arar
+    { const yz = $('#yzKart', m0); if (yz) yz.appendChild(FCYZ.card({ lang: document.documentElement.lang })); }
     Lan.kartBagla(m0); Kurum.bagla(m0); arsivBagla(m0); Danisman.ayarBagla(m0);
     if (r.anchor) { const a = $('#' + r.anchor, m0); if (a) setTimeout(() => a.scrollIntoView({ behavior: 'smooth' }), 50); r.anchor = null; }
   };

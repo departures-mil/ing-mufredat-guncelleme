@@ -28,6 +28,8 @@ test('Electron: açılış, çekirdek, eski kayıt dosyası', (t) => {
   assert.strictEqual(o.version, require('../package.json').version);
   assert.ok(o.winBtns >= 4, 'Küçült · Orta · Tam ekran · Kapat');
   assert.ok(o.lan, 'Wi‑Fi eşitleme kabukta var');
+  assert.ok(o.yerelZeka, 'Ayarlar: Çevrimdışı yapay zekâ kartı (window.fcYerelZeka)');
+  assert.ok(o.ayarSirasi.includes('yzKart'), 'yerel zekâ kartı ayarlarda');
   assert.ok(o.ogrenciler.includes('Eski Kayıt'), 'eski kayıt dosyası okundu');
   assert.strictEqual(o.ayarSirasi[0], 'look');
   assert.strictEqual(o.ayarSirasi[o.ayarSirasi.length - 1], 'contact');

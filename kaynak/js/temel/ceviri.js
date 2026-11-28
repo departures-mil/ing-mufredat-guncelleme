@@ -153,6 +153,9 @@
   }
   const withTimeout = (p, ms) => Promise.race([p, new Promise((_, rej) => setTimeout(() => rej(new Error('timeout')), ms))]);
   const drafts = new Set();
+  // yerel zekâya giden terim listesi: elle derlenmiş çeviri belleği + havacılık terim sözlüğü (bir kez hazırlanır)
+  let yzB = null;
+  const yzBellek = () => yzB || (yzB = [...(window.CEVIRI_BELLEGI || []), ...(window.GLOSSARY || [])].filter((e) => Array.isArray(e) && e[0] && e[1] && e[2]));
   let toastT = 0;
   window.translateText = async function (text, from, to) {
     if (!text || !String(text).trim() || from === to) return text;
@@ -160,6 +163,14 @@
     { ensure(); const f = !from || from === 'auto' ? detect(text) : from; const ex = TM[f] && TM[f].get(norm(text, f)); if (ex && ex[to]) return ex[to]; }
     if (navigator.onLine !== false) {
       try { const r = await withTimeout(online(text, from, to), 22000); if (r && String(r).trim()) return r; } catch (e) { /* çevrimdışı yola geç */ }
+    }
+    // Çevrimdışı sinirsel çeviri (masaüstü, yerel zekâ paketi kuruluysa): terimler çeviri belleğinden zorunlu
+    if (window.FCYZ && await FCYZ.ready('mt')) {
+      try {
+        const f = !from || from === 'auto' ? detect(text) : from;
+        const y = await FCYZ.translate(text, f, to, { memory: yzBellek() });
+        if (y && y.text && String(y.text).trim()) { drafts.add(y.text); scheduleMark(); return y.text; }
+      } catch (e) { console.warn('yerel çeviri', e); }
     }
     const r = translate(text, from, to);
     if (r.draft) { drafts.add(r.text); scheduleMark(); if (Date.now() - toastT > 15000 && window.UI) { toastT = Date.now(); UI.toast(t('mtOffline')); } }

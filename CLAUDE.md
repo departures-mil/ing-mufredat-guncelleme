@@ -57,3 +57,8 @@ ortak çekirdek üzerinde yeniden düzenlendi (eski yama katmanları v24.js / en
   izin listesi, eski kanal) + `test/arayuz.test.js` (Playwright: `PLAYWRIGHT_CORE=/opt/npm-tools/node_modules/playwright-core
   PLAYWRIGHT_BROWSERS_PATH=/opt/pw-browsers`) + `test/electron.test.js` (gerçek Electron, xvfb, `ING_SMOKE=1`, `ING_VERI`).
 - Ekran görüntüleri: `node araclar/ekran.js <klasör>`. APK yerelde: `ANDROID_TOOLS=<bt/,pf/> APK_IMZASIZ=1 bash araclar/apk.sh`.
+
+## Çevrimdışı yapay zekâ (3.2.0)
+- ortak-cekirdek `web/yerel-zeka` kopyası: `masaustu/cekirdek/yerel-zeka/` (ana süreç + iş parçacığı) ve `kaynak/cekirdek/fc-yerel-zeka-ui.js` (dosyalar.json'da).
+  Ayarlar kartı `#yzKart`; `OCR.read/text` paket kuruluysa `FCYZ.ocr` (PaddleOCR PP-OCRv5 + Tesseract), `translateText` çevrimdışında önce `FCYZ.translate`
+  (TranslateGemma / NLLB; bellek = CEVIRI_BELLEGI + GLOSSARY), sonra eski bellek çevirisi. Çıktı yine taslak (_mt) işaretlenir. Android'de yok (eski yol).

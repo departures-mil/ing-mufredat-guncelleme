@@ -75,9 +75,11 @@
 
   window.OCR = {
     parse,
-    available: () => !!window.Tesseract,
+    available: () => !!window.Tesseract || !!(window.FCYZ && FCYZ.available()),
     async read(file, onProgress) {
       progressFn = onProgress || null;
+      // masaüstünde çevrimdışı yapay zekâ paketi kuruluysa: PaddleOCR PP-OCRv5 + Tesseract (daha doğru)
+      if (window.FCYZ && await FCYZ.ready('ocr')) { try { if (onProgress) onProgress(10); const r = await FCYZ.ocr(file, { langs: ['en', 'tr'] }); if (onProgress) onProgress(100); return parse(r.text); } catch (e) { console.warn('yerel OCR', e); } }
       const [w, c] = await Promise.all([getWorker(), prep(file)]);
       const r = await w.recognize(c);
       return parse(r.data.text);
@@ -85,6 +87,7 @@
     // v1.3: düz yazı (toplu materyal yükleme). src: resim dosyası ya da hazır canvas
     async text(src, onProgress) {
       progressFn = onProgress || null;
+      if (window.FCYZ && await FCYZ.ready('ocr')) { try { if (onProgress) onProgress(10); const r = await FCYZ.ocr(src); if (onProgress) onProgress(100); return r.text || ''; } catch (e) { console.warn('yerel OCR', e); } }
       const [w, c] = await Promise.all([getWorker(), src instanceof HTMLCanvasElement ? src : prep(src)]);
       return (await w.recognize(c)).data.text || '';
     },
