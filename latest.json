@@ -1,13 +1,13 @@
 {
- "version": "3.102",
- "semver": "3.1.2",
- "file": "paketler/ing_3_102.b64",
- "sha256": "4a4a50bc8981205f3a2a2bc02fcfe4a82c1f62a24af97be1fc435de2e23ea35d",
- "size": 7082856,
- "gzlen": 3422964,
- "date": "2026-11-24T21:32:34Z",
+ "version": "3.200",
+ "semver": "3.2.0",
+ "file": "paketler/ing_3_200.b64",
+ "sha256": "0a69e90fc0b25d8286635608cfed663039070ed4be16486506e7e6f5a37cb429",
+ "size": 7105236,
+ "gzlen": 3434408,
+ "date": "2026-11-28T11:33:20Z",
  "minShell": 2,
- "notes_tr": "Eski sürümlerden bu sürüme geçiş bir kez tam kurulumla yapılır (eski güncelleyicideki siyah pencere sorunu yaşanmaz). Sonraki güncellemeler yine arka planda, kendiliğinden. Kayıtlar korunur.",
- "notes_en": "Moving from older versions to this one is done once with a full install (avoids the black-window problem of the old updater). Later updates again run by themselves in the background. Records are kept.",
- "notes_ar": "يتم الانتقال من الإصدارات القديمة إلى هذا الإصدار مرة واحدة بتثبيت كامل (تجنباً لمشكلة النوافذ السوداء في المحدِّث القديم). التحديثات اللاحقة تتم تلقائياً في الخلفية. تبقى السجلات محفوظة."
+ "notes_tr": "Çevrimdışı yapay zekâ: Ayarlar → «Çevrimdışı yapay zekâ» kartından bir kez indirilen paketlerle internet yokken de en yüksek kalitede yazı tanıma (PaddleOCR PP-OCRv5 + Tesseract; Türkçe, İngilizce, Arapça) ve sinirsel çeviri (NLLB-200; tr ↔ en ↔ ar, resmî dil, havacılık terimleri çeviri belleğinden zorunlu). Ekran kartı varsa (DirectML) daha hızlı; bilgisayarda Ollama kuruluysa çeviride o kullanılır. İndirmede yüzde, MB, kalan MB, hız ve süre görünür; paketler güncellemelerde yeniden inmez. Kayıtlar korunur.",
+ "notes_en": "Offline AI: packs downloaded once from Settings → «Offline AI» give the highest-quality text recognition (PaddleOCR PP-OCRv5 + Tesseract; Turkish, English, Arabic) and neural translation (NLLB-200; tr ↔ en ↔ ar, formal register, aviation terms enforced from the translation memory) even without internet. Faster with a graphics card (DirectML); if Ollama is installed on the computer it is used for translation. The download shows percent, MB, MB left, speed and time; packs are not downloaded again on updates. Records are kept.",
+ "notes_ar": "ذكاء اصطناعي دون اتصال: حزم تُنزَّل مرة واحدة من الإعدادات ← «الذكاء الاصطناعي دون اتصال» توفّر أعلى جودة في قراءة النصوص (PaddleOCR PP-OCRv5 + Tesseract؛ التركية والإنجليزية والعربية) والترجمة العصبية (NLLB-200؛ تركي ↔ إنجليزي ↔ عربي بلغة رسمية مع إلزام مصطلحات الطيران من ذاكرة الترجمة) حتى دون إنترنت. أسرع مع بطاقة الرسوميات (DirectML)، وإذا كان Ollama مثبتًا على الحاسوب يُستخدم في الترجمة. يعرض التنزيل النسبة المئوية والميغابايت والمتبقي والسرعة والوقت، ولا يُعاد تنزيل الحزم عند التحديث. تبقى السجلات محفوظة."
 }
